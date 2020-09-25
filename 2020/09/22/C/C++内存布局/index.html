@@ -44,7 +44,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-a"
+  id="post-C/C++内存布局"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -62,7 +62,7 @@
     </header>
      
     <div class="article-meta">
-      <a href="/myblog/2020/09/22/a/" class="article-date">
+      <a href="/myblog/2020/09/22/C/C++%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" class="article-date">
   <time datetime="2020-09-22T13:21:22.329Z" itemprop="datePublished">2020-09-22</time>
 </a> 
   <div class="article-category">
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">168</span>
+            <span class="post-count">356</span>
         </span>
     </span>
 
@@ -109,12 +109,20 @@
 </li>
 <li><p>数据段(data segment)</p>
 <blockquote>
-<p>已经初始化的全部静态变量</p>
+<p>已经初始化的全部静态变量<br>将由连接器为其分配内存，并且填如适当的初始值</p>
 </blockquote>
 </li>
-<li><p>BBS 段</p>
+<li><p>BBS 段(BBS segement)</p>
 <blockquote>
-<p>BBS是一种老旧的叫法</p>
+<p>BBS是一种老旧的叫法，意为 <strong><em>“由符号开始的块(block started by symbol)”</em></strong>。包含程序定义中所有的未初始化的全局变量和静态变量，在C/C++中未初始化的全局变量和静态变量全为零。</p>
+</blockquote>
+</li>
+<li><p>只读数据段(read only data segement)</p>
+<blockquote>
+<p> 又称为 <strong><em>rodata</em></strong> 段,包含程序中定义的只读(常量)全局变量。<br> 比如：浮点常量，用const关键字声名的全局对象实例……</p>
+<blockquote>
+<p>tips: 编译器通常会把整数常量视为<strong>明示常量</strong>(manifast constant)，并且直接把明示常量插入机器码中，直接占用代码段的存储空间而不存储于只读数据段。</p>
+</blockquote>
 </blockquote>
 </li>
 </ul>
@@ -182,7 +190,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/09/22/a/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2020/09/22/C/C++%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -283,6 +291,10 @@
 <nav class="navbar navbar-bottom">
   <ul class="nav">
     <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
       
       
     </li>
