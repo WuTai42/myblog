@@ -19,6 +19,65 @@
 ]]></content>
   </entry>
   <entry>
+    <title>利用汇编了解编程语言的本质（C/C++）</title>
+    <url>/myblog/2020/09/26/%E4%B8%80%E3%80%81%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%88CC++%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="一、利用汇编了解编程语言的本质（C-C-）"><a href="#一、利用汇编了解编程语言的本质（C-C-）" class="headerlink" title="一、利用汇编了解编程语言的本质（C\C++）"></a>一、利用汇编了解编程语言的本质（C\C++）</h1><h3 id="1、杂项"><a href="#1、杂项" class="headerlink" title="1、杂项"></a>1、杂项</h3><hr>
+<h5 id="汇编语言，机器语言，高级语言"><a href="#汇编语言，机器语言，高级语言" class="headerlink" title="汇编语言，机器语言，高级语言"></a>汇编语言，机器语言，高级语言</h5><p><code>汇编语言</code>与<code>机器语言</code>一一对应，每一条机器指令都有与之相对的汇编指令</p>
+<p><code>汇编语言</code>可以通过编译得到<code>机器语言</code>，<code>机器语言</code>可以通过反汇编得到<code>汇编语言</code></p>
+<p><code>高级语言</code>可以通过编译得到<code>汇编语言\机器语言</code>，但是<code>汇编语言\机器语言</code>几乎不可能还原成<code>高级语言</code></p>
+<p>​                                编译        </p>
+<p>​                汇编语言 ——&gt; 机器语言</p>
+<p>​            mov ax, bx&lt;—— 0010101011</p>
+<p>​                                反编译</p>
+<p>eg：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">//注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要相关高级语言，那么可以将其还原为伪代码，在认为还原为高级语言。</span></span><br></pre></td></tr></table></figure>
+
+<p>​    <strong>在不同架构的CPU下，生成的汇编码不一样</strong></p>
+<h5 id="一些编程语言的本质区别"><a href="#一些编程语言的本质区别" class="headerlink" title="一些编程语言的本质区别"></a>一些编程语言的本质区别</h5><ul>
+<li><p>C++</p>
+<blockquote>
+<p>轻易反汇编</p>
+</blockquote>
+<p>编译器编译为汇编代码，可以和机器码进行转换</p>
+</li>
+<li><p>JavaScript</p>
+<blockquote>
+<p>脚本语言，由浏览器进行解析</p>
+</blockquote>
+</li>
+<li><p>PHP</p>
+<blockquote>
+<p>脚本语言，由Zend Engine(ZE)进行解析</p>
+</blockquote>
+<p>JS 和 PHP 在通过引擎解析后变为中间代码，然后转为*机器码(不同语言的机器码不同)*，所以不好接触到底层</p>
+</li>
+<li><p>Java</p>
+<blockquote>
+<p>由JVM进行装载字节码d</p>
+</blockquote>
+<p>编译器编译为class（字节码），然后通过JVM虚拟机形转为器码</p>
+</li>
+</ul>
+<p>无论用什么语言编写代码，最终会形成几乎相同的机器码。</p>
+<h3 id="2、函数重载（Overload）"><a href="#2、函数重载（Overload）" class="headerlink" title="2、函数重载（Overload）"></a>2、函数重载（Overload）</h3><hr>
+<ul>
+<li><p>规则</p>
+<blockquote>
+<p>函数名相同</p>
+<p>参数个数不同、参数类型不同、参数顺序不同</p>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>汇编</tag>
+        <tag>C/C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C/C++ 内存布局</title>
     <url>/myblog/2020/09/22/C/C++%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</url>
     <content><![CDATA[<hr>
