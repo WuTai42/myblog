@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/myblog/2020/09/14/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>利用汇编了解编程语言的本质（C/C++）</title>
     <url>/myblog/2020/09/26/%E4%B8%80%E3%80%81%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%88CC++%EF%BC%89/</url>
     <content><![CDATA[<h1 id="一、利用汇编了解编程语言的本质（C-C-）"><a href="#一、利用汇编了解编程语言的本质（C-C-）" class="headerlink" title="一、利用汇编了解编程语言的本质（C\C++）"></a>一、利用汇编了解编程语言的本质（C\C++）</h1><h3 id="1、杂项"><a href="#1、杂项" class="headerlink" title="1、杂项"></a>1、杂项</h3><hr>
@@ -26,8 +8,8 @@
 <p><code>汇编语言</code>可以通过编译得到<code>机器语言</code>，<code>机器语言</code>可以通过反汇编得到<code>汇编语言</code></p>
 <p><code>高级语言</code>可以通过编译得到<code>汇编语言\机器语言</code>，但是<code>汇编语言\机器语言</code>几乎不可能还原成<code>高级语言</code></p>
 <p>​                                编译        </p>
-<p>​                汇编语言 ——&gt; 机器语言</p>
-<p>​            mov ax, bx&lt;—— 0010101011</p>
+<p>​                         汇编语言 ——&gt; 机器语言</p>
+<p>​                        mov ax, bx&lt;—— 0010101011</p>
 <p>​                                反编译</p>
 <p>eg：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">//注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要相关高级语言，那么可以将其还原为伪代码，在人为还原为高级语言。</span></span><br></pre></td></tr></table></figure>
@@ -126,6 +108,22 @@
 </ul>
 <p>在C\C++混合开发的时候会出现大量问题，推荐按一下方式使用<code>extern &quot;C&quot;</code></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus <span class="comment">//使用宏</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>但是一定要保证每一个文件里的宏都不相同，推荐将宏和文件名字相同。<code>#pragma once</code> 可以保证整个文件内容只被编译一次，避免重复包含，但是 <code>#pragma once</code>不被某些编译器支持。</p>
+<h3 id="5、内联函数"><a href="#5、内联函数" class="headerlink" title="5、内联函数"></a>5、内联函数</h3><hr>
+<p>使用<code>inline</code>关键字将其变为内联函数。编译器直接将函数调用展开为函数体代码。</p>
+<p>在函数开始的时候会开辟栈空间，函数结束的时候回收栈空间。内联函数在代码体积不大和使用次数过多的时候推荐使用。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v1 + v2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">    <span class="keyword">int</span> c = sum(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">    </span><br><span class="line">    不内联</span><br><span class="line">    push		<span class="number">14</span>h</span><br><span class="line">    push		<span class="number">0</span>Ah</span><br><span class="line">    <span class="function">call		<span class="title">sum</span><span class="params">(<span class="number">08110</span>A0h)</span></span></span><br><span class="line">    在release模式下，编译器会直接将sum函数优化，直接给出返回值，不再调用函数。</span><br><span class="line">    把优化关闭，进行相关调整后</span><br><span class="line">    mov			eax,<span class="number">0</span>Ah</span><br><span class="line">   	add 		eax,<span class="number">14</span>h</span><br><span class="line">    mov			dword ptr [c],eax  <span class="comment">//等同于直接实现 10 + 20 </span></span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -154,7 +152,26 @@
       <tags>
         <tag>汇编</tag>
         <tag>C/C++</tag>
+        <tag>学习笔记</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/myblog/2020/09/14/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>C/C++ 内存布局</title>
