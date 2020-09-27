@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hello World</title>
+    <url>/myblog/2020/09/14/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>利用汇编了解编程语言的本质（C/C++）</title>
     <url>/myblog/2020/09/26/%E4%B8%80%E3%80%81%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%88CC++%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="一、利用汇编了解编程语言的本质（C-C-）"><a href="#一、利用汇编了解编程语言的本质（C-C-）" class="headerlink" title="一、利用汇编了解编程语言的本质（C\C++）"></a>一、利用汇编了解编程语言的本质（C\C++）</h1><h3 id="1、杂项"><a href="#1、杂项" class="headerlink" title="1、杂项"></a>1、杂项</h3><hr>
+    <content><![CDATA[<h1 id="一、基础内容"><a href="#一、基础内容" class="headerlink" title="一、基础内容"></a>一、基础内容</h1><h3 id="1、杂项"><a href="#1、杂项" class="headerlink" title="1、杂项"></a>1、杂项</h3><hr>
 <h5 id="汇编语言，机器语言，高级语言"><a href="#汇编语言，机器语言，高级语言" class="headerlink" title="汇编语言，机器语言，高级语言"></a>汇编语言，机器语言，高级语言</h5><p><code>汇编语言</code>与<code>机器语言</code>一一对应，每一条机器指令都有与之相对的汇编指令</p>
 <p><code>汇编语言</code>可以通过编译得到<code>机器语言</code>，<code>机器语言</code>可以通过反汇编得到<code>汇编语言</code></p>
 <p><code>高级语言</code>可以通过编译得到<code>汇编语言\机器语言</code>，但是<code>汇编语言\机器语言</code>几乎不可能还原成<code>高级语言</code></p>
 <p>​                                编译        </p>
-<p>​                         汇编语言 ——&gt; 机器语言</p>
-<p>​                        mov ax, bx&lt;—— 0010101011</p>
+<p>​                汇编语言 ——&gt; 机器语言</p>
+<p>​            mov ax, bx&lt;—— 0010101011</p>
 <p>​                                反编译</p>
 <p>eg：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">//注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要相关高级语言，那么可以将其还原为伪代码，在人为还原为高级语言。</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">/*注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要</span></span><br><span class="line"><span class="comment">相关高级语言，那么可以将其还原为伪代码，在人为还原为高级语言。*/</span></span><br></pre></td></tr></table></figure>
 
 <p>​    <strong>在不同架构的CPU下，生成的汇编码不一样</strong></p>
 <h5 id="一些编程语言的本质区别"><a href="#一些编程语言的本质区别" class="headerlink" title="一些编程语言的本质区别"></a>一些编程语言的本质区别</h5><ul>
@@ -108,43 +126,159 @@
 </ul>
 <p>在C\C++混合开发的时候会出现大量问题，推荐按一下方式使用<code>extern &quot;C&quot;</code></p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus <span class="comment">//使用宏</span></span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    </span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __cplusplus</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>为了避免重复引用，用</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifndef</span> ***</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> ***</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
 <p>但是一定要保证每一个文件里的宏都不相同，推荐将宏和文件名字相同。<code>#pragma once</code> 可以保证整个文件内容只被编译一次，避免重复包含，但是 <code>#pragma once</code>不被某些编译器支持。</p>
 <h3 id="5、内联函数"><a href="#5、内联函数" class="headerlink" title="5、内联函数"></a>5、内联函数</h3><hr>
 <p>使用<code>inline</code>关键字将其变为内联函数。编译器直接将函数调用展开为函数体代码。</p>
 <p>在函数开始的时候会开辟栈空间，函数结束的时候回收栈空间。内联函数在代码体积不大和使用次数过多的时候推荐使用。</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> v1, <span class="keyword">int</span> v2)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> v1 + v2;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>&#123;</span><br><span class="line">    run();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    func();</span><br><span class="line">    <span class="keyword">int</span> c = sum(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">    </span><br><span class="line">    不内联</span><br><span class="line">    push		<span class="number">14</span>h</span><br><span class="line">    push		<span class="number">0</span>Ah</span><br><span class="line">    <span class="function">call		<span class="title">sum</span><span class="params">(<span class="number">08110</span>A0h)</span></span></span><br><span class="line">    在release模式下，编译器会直接将sum函数优化，直接给出返回值，不再调用函数。</span><br><span class="line">    把优化关闭，进行相关调整后</span><br><span class="line">    mov			eax,<span class="number">0</span>Ah</span><br><span class="line">   	add 		eax,<span class="number">14</span>h</span><br><span class="line">    mov			dword ptr [c],eax  <span class="comment">//等同于直接实现 10 + 20 </span></span><br><span class="line">    </span><br><span class="line">        </span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; c &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">    </span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>内联函数与宏对比：</p>
+<ul>
+<li>两者都能减少函数调用</li>
+<li>相比于宏内联函数具有函数特性，拥有语法检测和代码提示功能</li>
+</ul>
+<h3 id="6、表达式"><a href="#6、表达式" class="headerlink" title="6、表达式"></a>6、表达式</h3><hr>
+<ul>
+<li><p>C++有些表达式能被赋值</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">(a = b) = <span class="number">4</span>;</span><br><span class="line"><span class="comment">// a = 4; b = 2;</span></span><br><span class="line">(a &gt; b ? a : b) = <span class="number">4</span>;</span><br><span class="line"><span class="comment">// b = 4</span></span><br></pre></td></tr></table></figure>
 
 
 
+</li>
+</ul>
+<h3 id="7、const"><a href="#7、const" class="headerlink" title="7、const"></a>7、const</h3><hr>
+<ul>
+<li><p>const是常量的意思，被修饰的变量不可修改</p>
+<p>如果修饰的是类、结构体(的指针)，成员函数不可以更改</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> age = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> *p0 = &amp;age;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> *p1 = &amp;age; <span class="comment">// p0 p1 等价，都被const修饰</span></span><br><span class="line"><span class="keyword">int</span> * <span class="keyword">const</span> p2 = &amp;age;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> * <span class="keyword">const</span> p3 = &amp;age;</span><br><span class="line"><span class="keyword">int</span> <span class="keyword">const</span> * <span class="keyword">const</span> p4 = &amp;age; <span class="comment">// p3 p4 等价</span></span><br></pre></td></tr></table></figure>
 
+<p>对于const有以下结论：</p>
+<ul>
+<li><p>const修饰的是其右边的内容 </p>
+<blockquote>
+<p>const int * <code>const p3</code> = &age;  意味着p3为常量但是*p3不是常量，可以对 *p3进行修改</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span> <span class="keyword">int</span> age; &#125;;</span><br><span class="line">Student stu1 = &#123;<span class="number">20</span>&#125;;</span><br><span class="line">Student stu2 = &#123;<span class="number">20</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Student *pStu1 = &amp;stu1;</span><br><span class="line">*pStu1 = stu2; <span class="comment">// 报错，const修饰*pStu1不能被赋值</span></span><br><span class="line">(*pStu1).age = <span class="number">30</span>; </span><br><span class="line">pStu1-&gt;age = <span class="number">30</span>; <span class="comment">// 报错，为了保证const的严谨性，不允许通过指针访问成员属性</span></span><br><span class="line">pStu1 = &amp;stu2;</span><br><span class="line"></span><br><span class="line">Student * <span class="keyword">const</span> pStu2 = &amp;stu2;</span><br><span class="line">*pStu2 = stu1;</span><br><span class="line">(*pStu2).age = <span class="number">30</span>;</span><br><span class="line">pStu2-&gt;age = <span class="number">30</span>;</span><br><span class="line">pStu2 = &amp;stu1; <span class="comment">// 报错，不能修改pStu2的内容</span></span><br></pre></td></tr></table></figure>
 
+<h3 id="8、引用-Reference"><a href="#8、引用-Reference" class="headerlink" title="8、引用(Reference)"></a>8、引用(Reference)</h3><hr>
+<p>在C语言中，使用<code>指针(Pointer)</code>可以间接获取、修改某个变量的值</p>
+<p>在C++中，使用<code>引用(Reference)</code>可以起到更指针类似的功能</p>
+<p>引用的注意点：</p>
+<ul>
+<li>引用相当于变量的别名</li>
+<li>对引用做计算等于对其指向的变量做运算</li>
+<li>必须在定义的时候初始化，而且一旦指向某个变量就不可以再改变</li>
+<li>可以利用一个引用初始化另一个引用，相当于一个变量有多个别名</li>
+<li>不存在<code>引用的引用</code>、<code>指向引用的指针</code>、<code>引用数组</code></li>
+</ul>
+<p>引用的价值：比指针更安全、函数返回值可以被赋值</p>
+<h5 id="引用的本质"><a href="#引用的本质" class="headerlink" title="引用的本质"></a>引用的本质</h5><ul>
+<li>引用的本质就是指针，只是编译器削弱了它的功能，引用就是弱化了的指针</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> &amp;age;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; <span class="keyword">sizeof</span>(student) &lt;&lt; <span class="built_in">endl</span>; <span class="comment">// 8 X64环境 也就是从侧面证明了引用的大小为8bit</span></span><br><span class="line">    <span class="keyword">int</span> age = <span class="number">10</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>汇编码(关闭显示符号):</p>
+<ul>
+<li>指针</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> *p = &amp;age;</span><br><span class="line">lea			eax,[ebp<span class="number">-18</span>h],eax</span><br><span class="line">mov			dword ptr [ebp<span class="number">-18</span>h],eax</span><br><span class="line">*p = <span class="number">30</span>;</span><br><span class="line">mov 		eax,dword ptr [ebp<span class="number">-18</span>h]</span><br><span class="line">mov 		dword ptr [eax],<span class="number">1</span>Eh</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li>引用</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> &amp;ref = age;</span><br><span class="line">lea			eax,[ebp<span class="number">-18</span>h],eax</span><br><span class="line">mov			dword ptr [ebp<span class="number">-18</span>h],eax</span><br><span class="line">ref = <span class="number">30</span>;</span><br><span class="line">mov 		eax,dword ptr [ebp<span class="number">-18</span>h]</span><br><span class="line">mov 		dword ptr [eax],<span class="number">1</span>Eh</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>通过对比发现两者的汇编码完全一样，所以一个引用也就占用一个指针的大小</p>
+<h1 id="二、汇编"><a href="#二、汇编" class="headerlink" title="二、汇编"></a>二、汇编</h1><h3 id="1、x86，x64汇编"><a href="#1、x86，x64汇编" class="headerlink" title="1、x86，x64汇编"></a>1、x86，x64汇编</h3><hr>
+<p>汇编语言的种类</p>
+<ul>
+<li>8086汇编</li>
+<li>x86汇编</li>
+<li>x64汇编</li>
+<li>ＡＲＭ汇编</li>
+<li>．．．．．．</li>
+</ul>
+<p>根据编译器不同，有两种书写格式</p>
+<ul>
+<li>Intel(Visual Studio)</li>
+<li>AT&amp;T(Mac)</li>
+</ul>
+<h5 id="x64汇编-寄存器"><a href="#x64汇编-寄存器" class="headerlink" title="x64汇编- 寄存器"></a>x64汇编- 寄存器</h5><p>不同汇编的寄存器不同</p>
+<p>常用寄存器：</p>
+<table>
+<thead>
+<tr>
+<th>RAX\RBX\RCX\RDX</th>
+<th align="left">(64bit下常见)通用寄存器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>EAX\EBXECX\EDX</strong></td>
+<td align="left"><strong>(32bit下常见))通用寄存器</strong></td>
+</tr>
+<tr>
+<td><strong>AX\BX\CX\DX</strong></td>
+<td align="left"><strong>(16bit下常见)通用寄存器</strong></td>
+</tr>
+<tr>
+<td></td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>tips：</p>
+<blockquote>
+<ul>
+<li><p>一个寄存器能存8个字节(x64)</p>
+</li>
+<li><p>为了使新的寄存器兼容老旧的寄存器将新寄存器分成更小的区块来存储旧的寄存器</p>
+<table>
+<thead>
+<tr>
+<th>63…32</th>
+<th>31…16</th>
+<th>15…8</th>
+<th>7…0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td><strong>AH…</strong></td>
+<td><strong>AL…</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td><strong>AX…</strong></td>
+<td><strong>…</strong></td>
+</tr>
+<tr>
+<td></td>
+<td><strong>EAX…</strong></td>
+<td><strong>…</strong></td>
+<td><strong>…</strong></td>
+</tr>
+<tr>
+<td><strong>RAX…</strong></td>
+<td><strong>…</strong></td>
+<td><strong>…</strong></td>
+<td><strong>…</strong></td>
+</tr>
+</tbody></table>
+<p>AH H high</p>
+<p>AL  L low</p>
+</li>
+</ul>
+</blockquote>
+<h3 id="2、内联汇编"><a href="#2、内联汇编" class="headerlink" title="2、内联汇编"></a>2、内联汇编</h3><hr>
 ]]></content>
       <categories>
         <category>C/C++</category>
@@ -154,24 +288,6 @@
         <tag>C/C++</tag>
         <tag>学习笔记</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/myblog/2020/09/14/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-]]></content>
   </entry>
   <entry>
     <title>C/C++ 内存布局</title>
