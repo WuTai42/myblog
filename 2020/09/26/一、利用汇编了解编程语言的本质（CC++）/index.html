@@ -99,7 +99,7 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h1 id="一、基础内容"><a href="#一、基础内容" class="headerlink" title="一、基础内容"></a>一、基础内容</h1><h3 id="1、杂项"><a href="#1、杂项" class="headerlink" title="1、杂项"></a>1、杂项</h3><hr>
-<h5 id="汇编语言，机器语言，高级语言"><a href="#汇编语言，机器语言，高级语言" class="headerlink" title="汇编语言，机器语言，高级语言"></a>汇编语言，机器语言，高级语言</h5><p><code>汇编语言</code>与<code>机器语言</code>一一对应，每一条机器指令都有与之相对的汇编指令</p>
+<h5 id="（1）汇编语言，机器语言，高级语言"><a href="#（1）汇编语言，机器语言，高级语言" class="headerlink" title="（1）汇编语言，机器语言，高级语言"></a>（1）汇编语言，机器语言，高级语言</h5><p><code>汇编语言</code>与<code>机器语言</code>一一对应，每一条机器指令都有与之相对的汇编指令</p>
 <p><code>汇编语言</code>可以通过编译得到<code>机器语言</code>，<code>机器语言</code>可以通过反汇编得到<code>汇编语言</code></p>
 <p><code>高级语言</code>可以通过编译得到<code>汇编语言\机器语言</code>，但是<code>汇编语言\机器语言</code>几乎不可能还原成<code>高级语言</code></p>
 <p>​                                编译        </p>
@@ -110,7 +110,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">/*注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要</span></span><br><span class="line"><span class="comment">相关高级语言，那么可以将其还原为伪代码，在人为还原为高级语言。*/</span></span><br></pre></td></tr></table></figure>
 
 <p>​    <strong>在不同架构的CPU下，生成的汇编码不一样</strong></p>
-<h5 id="一些编程语言的本质区别"><a href="#一些编程语言的本质区别" class="headerlink" title="一些编程语言的本质区别"></a>一些编程语言的本质区别</h5><ul>
+<h5 id="（2）一些编程语言的本质区别"><a href="#（2）一些编程语言的本质区别" class="headerlink" title="（2）一些编程语言的本质区别"></a>（2）一些编程语言的本质区别</h5><ul>
 <li><p>C++</p>
 <blockquote>
 <p>轻易反汇编</p>
@@ -293,21 +293,21 @@
 <table>
 <thead>
 <tr>
-<th>RAX\RBX\RCX\RDX</th>
-<th align="left">(64bit下常见)通用寄存器</th>
+<th align="left">标识符</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody><tr>
-<td><strong>EAX\EBXECX\EDX</strong></td>
+<td align="left"><strong>RAX\RBX\RCX\RDX</strong></td>
+<td align="left"><strong>(64bit下常见)通用寄存器</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>EAX\EBXECX\EDX</strong></td>
 <td align="left"><strong>(32bit下常见))通用寄存器</strong></td>
 </tr>
 <tr>
-<td><strong>AX\BX\CX\DX</strong></td>
+<td align="left"><strong>AX\BX\CX\DX</strong></td>
 <td align="left"><strong>(16bit下常见)通用寄存器</strong></td>
-</tr>
-<tr>
-<td></td>
-<td align="left"></td>
 </tr>
 </tbody></table>
 <p>tips：</p>
