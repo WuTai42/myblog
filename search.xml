@@ -329,7 +329,7 @@
 </blockquote>
 </li>
 <li><p>[地址值]</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> b = a + <span class="number">1</span>；</span><br><span class="line">    </span><br><span class="line">mov			dword ptr [ebp<span class="number">-8</span>], <span class="number">3</span></span><br><span class="line"><span class="comment">//mov [1122h], 3 意味着将3放入[1122h]所在的地址空间</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">int</span> b = a + <span class="number">1</span>；</span><br><span class="line">    </span><br><span class="line">mov           dword ptr [ebp<span class="number">-8</span>], <span class="number">3</span></span><br><span class="line"><span class="comment">//mov [1122h], 3 意味着将3放入[1122h]所在的地址空间</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
 <p><strong>mov                 [1128h], 3</strong></p>
 <p><strong><code>word</code>是2个字节，<code>dword</code>是4个字节，<code>qword</code>是8个字节</strong></p>
