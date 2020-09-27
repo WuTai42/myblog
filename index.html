@@ -127,7 +127,7 @@
     
     
     <article
-  id="post-一、利用汇编了解编程语言的本质（CC++）"
+  id="post-利用汇编深入学习C++"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -138,7 +138,7 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/myblog/2020/09/26/%E4%B8%80%E3%80%81%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%88CC++%EF%BC%89/"
+  <a class="article-title" href="/myblog/2020/09/26/%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0C++/"
     >利用汇编深入学习C++</a> 
 </h2>
  
@@ -146,7 +146,7 @@
     </header>
      
     <div class="article-meta">
-      <a href="/myblog/2020/09/26/%E4%B8%80%E3%80%81%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E4%BA%86%E8%A7%A3%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%88CC++%EF%BC%89/" class="article-date">
+      <a href="/myblog/2020/09/26/%E5%88%A9%E7%94%A8%E6%B1%87%E7%BC%96%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0C++/" class="article-date">
   <time datetime="2020-09-26T04:31:42.676Z" itemprop="datePublished">2020-09-26</time>
 </a> 
   <div class="article-category">
@@ -161,10 +161,10 @@
 <h5 id="（1）汇编语言，机器语言，高级语言"><a href="#（1）汇编语言，机器语言，高级语言" class="headerlink" title="（1）汇编语言，机器语言，高级语言"></a>（1）汇编语言，机器语言，高级语言</h5><p><code>汇编语言</code>与<code>机器语言</code>一一对应，每一条机器指令都有与之相对的汇编指令</p>
 <p><code>汇编语言</code>可以通过编译得到<code>机器语言</code>，<code>机器语言</code>可以通过反汇编得到<code>汇编语言</code></p>
 <p><code>高级语言</code>可以通过编译得到<code>汇编语言\机器语言</code>，但是<code>汇编语言\机器语言</code>几乎不可能还原成<code>高级语言</code></p>
-<p>​                                编译        </p>
-<p>​                汇编语言 ——&gt; 机器语言</p>
+<p>​&emsp;&emsp;&emsp;&emsp;&emsp;编译        </p>
+<p>​&emsp;汇编语言 ——&gt; 机器语言</p>
 <p>​            mov ax, bx&lt;—— 0010101011</p>
-<p>​                                反编译</p>
+<p>​&emsp;&emsp;&emsp;&emsp;反编译</p>
 <p>eg：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Data</span>&#123;</span></span><br><span class="line">	<span class="keyword">int</span> year;</span><br><span class="line">    <span class="keyword">int</span> month;</span><br><span class="line">    <span class="keyword">int</span> day;</span><br><span class="line">&#125;;</span><br><span class="line">Date d = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">C7 <span class="number">45</span> F0 <span class="number">01</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-10</span>h],<span class="number">1</span></span><br><span class="line">C7 <span class="number">45</span> F4 <span class="number">02</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-0</span>Ch],<span class="number">2</span></span><br><span class="line">C7 <span class="number">45</span> F8 <span class="number">03</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> mov			dword ptr [ebp<span class="number">-8</span>],<span class="number">3</span></span><br><span class="line"><span class="comment">/*注意到两者的机器码和汇编码完全一样，所以只确定汇编\机器语言不能还原为唯一确定的高级语言，如果一定需要</span></span><br><span class="line"><span class="comment">相关高级语言，那么可以将其还原为伪代码，在人为还原为高级语言。*/</span></span><br></pre></td></tr></table></figure>
 
