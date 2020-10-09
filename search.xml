@@ -637,25 +637,41 @@
 <li>全局变量writecount，用于控制对rsem的设置</li>
 <li>信号灯y，用于控制对writecount的更新</li>
 </ul>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> readcount, writecount, semphore x = <span class="number">1</span>, y = <span class="number">1</span>, z = <span class="number">1</span>, wsem = <span class="number">1</span>, rsem = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        semWait(z);</span><br><span class="line">        	semWait(rsem);</span><br><span class="line">        		semWait(x);</span><br><span class="line">        			readcount++;</span><br><span class="line">        			<span class="keyword">if</span>(readcount == <span class="number">1</span>)</span><br><span class="line">                 		semWait(wsem);</span><br><span class="line">        		semSignal(x);</span><br><span class="line">        	semSignal(rsem);</span><br><span class="line">        semSignal(z);</span><br><span class="line">        READUNIT();</span><br><span class="line">        semWait(x);</span><br><span class="line">        	readcount--;</span><br><span class="line">        	<span class="keyword">if</span>(readcount == <span class="number">0</span>) semSignal(wsem);</span><br><span class="line">        semSignal(wsem);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        semWait(y);</span><br><span class="line">        	writecount++;</span><br><span class="line">        	<span class="keyword">if</span>(writecount == <span class="number">1</span>)</span><br><span class="line">                semWait(rsem);</span><br><span class="line">        semSignal(y);</span><br><span class="line">        semWait(wsem);</span><br><span class="line">        WRITEUNIT();</span><br><span class="line">        semSignal(wsem);</span><br><span class="line">        semWait(y);</span><br><span class="line">        	writecount--;</span><br><span class="line">        	<span class="keyword">if</span>(writecount == <span class="number">0</span>)		semSignal (rsem);</span><br><span class="line">        semSignal(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    readcount = writecount = <span class="number">0</span>;</span><br><span class="line">    parbegin( reader, writer );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> readcount, writecount, semphore x = <span class="number">1</span>, y = <span class="number">1</span>, z = <span class="number">1</span>, wsem = <span class="number">1</span>, rsem = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">reader</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        semWait(z);</span><br><span class="line">        	semWait(rsem); <span class="comment">// 写者对rsem进行了设置，一个读者在rsem上等待，其他读者全在z上等待</span></span><br><span class="line">        		semWait(x);</span><br><span class="line">        			readcount++;</span><br><span class="line">        			<span class="keyword">if</span>(readcount == <span class="number">1</span>) <span class="comment">//新的方案只允许一个读者在rsem上等待，后续到达的读者必须在z上等待</span></span><br><span class="line">                 		semWait(wsem); </span><br><span class="line">        		semSignal(x);</span><br><span class="line">        	semSignal(rsem);</span><br><span class="line">        semSignal(z);</span><br><span class="line">        READUNIT();</span><br><span class="line">        semWait(x);</span><br><span class="line">        	readcount--;</span><br><span class="line">        	<span class="keyword">if</span>(readcount == <span class="number">0</span>) semSignal(wsem);</span><br><span class="line">        semSignal(x);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">writer</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        semWait(y);</span><br><span class="line">        	writecount++;</span><br><span class="line">        	<span class="keyword">if</span>(writecount == <span class="number">1</span>) </span><br><span class="line">                semWait(rsem);</span><br><span class="line">        semSignal(y);</span><br><span class="line">        semWait(wsem); <span class="comment">// 写者全在wsem上排队</span></span><br><span class="line">        WRITEUNIT();</span><br><span class="line">        semSignal(wsem);</span><br><span class="line">        semWait(y);</span><br><span class="line">        	writecount--;</span><br><span class="line">        	<span class="keyword">if</span>(writecount == <span class="number">0</span>)		semSignal (rsem); <span class="comment">//</span></span><br><span class="line">        semSignal(y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    readcount = writecount = <span class="number">0</span>;</span><br><span class="line">    parbegin( reader, writer );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>所示方案中进程队列情况</p>
+<table>
+<thead>
+<tr>
+<th align="center">读写者情况</th>
+<th align="center">信号灯设置以及排队情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">系统中只有读者</td>
+<td align="center">1、wsem设置  2、无排队</td>
+</tr>
+<tr>
+<td align="center">系统中只有写者</td>
+<td align="center">1、wsem和rsem设置  2、写者在wsem上排队</td>
+</tr>
+<tr>
+<td align="center">有读者和写者，读者在前</td>
+<td align="center">1、wsem被读者设置  2、rsem被写者设置  3、所有写者在wsem上排队</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">4、一个读者在resm上排队  5、其他读者在z上排队</td>
+</tr>
+<tr>
+<td align="center">有读者和写者，写者在前</td>
+<td align="center">1、wsem被写者设置  2、rsem被写者设置  3、写者在wsem上排队</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">4、一个读者在rsem上排队  5、其他读者在z上排队</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
         <category>操作系统</category>
