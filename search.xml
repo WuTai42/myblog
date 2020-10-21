@@ -56,38 +56,26 @@
 
 
 
+<h3 id="二、在-const-和-non-const-成员函数中避免重复"><a href="#二、在-const-和-non-const-成员函数中避免重复" class="headerlink" title="二、在 const 和 non-const 成员函数中避免重复"></a>二、在 const 和 non-const 成员函数中避免重复</h3><p>对于在 上一节提到的用 mutable 解决 bitwise-const 错误理解的问题，是一个不错的解法，但是不能适用于所有的 const 相关难题。</p>
+<p>当 operator[] 操作过于复杂的时候，代码的重复量会造成很大的困扰</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TextBlock</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">    ...;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[] (<span class="built_in">std</span>::<span class="keyword">size_t</span> position) <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        ...; <span class="comment">// bounding checking</span></span><br><span class="line">        ...; <span class="comment">// log access data</span></span><br><span class="line">        ...; <span class="comment">// verify data integrity</span></span><br><span class="line">        <span class="keyword">return</span> text[position];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[] (<span class="built_in">std</span>::<span class="keyword">size_t</span> position) </span><br><span class="line">    &#123;</span><br><span class="line">        ...; <span class="comment">// bounding checking</span></span><br><span class="line">        ...; <span class="comment">// log access data</span></span><br><span class="line">        ...; <span class="comment">// verify data integrity</span></span><br><span class="line">        <span class="keyword">return</span> text[position];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>: </span><br><span class="line">    	<span class="built_in">std</span>::<span class="built_in">string</span> text;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
+<p>以上的代码重复发，编译时间，维护，代码膨胀……问题会让人头大</p>
+<p>这时需要做的是： <strong>实现 operator[] 机制一次， 并两次使用</strong></p>
+<p>需要使用的方法是: **casting away constness **      Tips: 除非是有特殊需求，一般不会推荐使用 casting 操作</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TextBlock</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>: </span><br><span class="line">    ...;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[] (<span class="built_in">std</span>::<span class="keyword">size_t</span> position) <span class="keyword">const</span></span><br><span class="line">    &#123;</span><br><span class="line">        ...; <span class="comment">// bounding checking</span></span><br><span class="line">        ...; <span class="comment">// log access data</span></span><br><span class="line">        ...; <span class="comment">// verify data integrity</span></span><br><span class="line">        <span class="keyword">return</span> text[position];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">char</span>&amp; <span class="keyword">operator</span>[] (<span class="built_in">std</span>::<span class="keyword">size_t</span> position) </span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">            <span class="keyword">const_cast</span>&lt;<span class="keyword">char</span>&amp;&gt;( <span class="comment">// 第二次casting将 op[] 的 const 性质消除</span></span><br><span class="line">            	<span class="keyword">static_cast</span>&lt;<span class="keyword">const</span> TextBlock&amp;&gt;(*<span class="keyword">this</span>) <span class="comment">// 第一次casting，将*this的原始类型从TextBlock&amp; 转型为 const TextBlock&amp; </span></span><br><span class="line">            		[position]</span><br><span class="line">        	)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span>: </span><br><span class="line">    	<span class="built_in">std</span>::<span class="built_in">string</span> text;</span><br><span class="line">    </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<p>以上代码长尝试用 <code>non-cost operator[]</code> 调用它的 <code>const</code> 兄弟</p>
+<p>还有一点要注意：<strong>不要用 const 版本调用 non-const 版本来避免重复</strong> </p>
+<p>否则你之前的承诺： <strong>const 成员函数承诺不改变其对象的逻辑状态</strong> 便没有任何价值！！！💔💔💔</p>
+<p>const 在编程的时候是一个强有力的帮手，但是要小心其使用 💖 💖 💖</p>
+<p>总结：</p>
+<ul>
+<li>将某些东西声明为 const 可以帮助编译器检测错误用法。const 可以施加于任何作用域内的对象、函数参数、函数返回类型、成员函数本体</li>
+<li>编译器会强制实施 bitwise constness，但是自己在编写程序的时候要使用 “概念上的常量” conceptual constness</li>
+<li>当const 和 non-const 成员函数有相同的实现的时候，要用 non-const  版本来调用 const 版本</li>
+</ul>
+<p>​                                                                                                     <center><del>FINE</del></center></p>
 ]]></content>
       <categories>
         <category>C/C++</category>
