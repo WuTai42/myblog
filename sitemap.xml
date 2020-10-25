@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://example.com/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/</loc>
+    
+    <lastmod>2020-10-25</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://example.com/2020/10/24/C/Linkers%20and%20Loads/</loc>
     
     <lastmod>2020-10-24</lastmod>
@@ -81,20 +88,6 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/Linkers-and-loaders/</loc>
-    <lastmod>2020-10-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://example.com/tags/Operation-Systems/</loc>
-    <lastmod>2020-10-25</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>http://example.com/tags/Memory-Management/</loc>
     <lastmod>2020-10-25</lastmod>
     <changefreq>daily</changefreq>
@@ -109,7 +102,21 @@
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
+    <loc>http://example.com/tags/Linkers-and-loaders/</loc>
+    <lastmod>2020-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Operation-Systems/</loc>
+    <lastmod>2020-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Virtual-Memory/</loc>
     <lastmod>2020-10-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -117,6 +124,13 @@
   
   <url>
     <loc>http://example.com/tags/%E6%B1%87%E7%BC%96/</loc>
+    <lastmod>2020-10-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2020-10-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
