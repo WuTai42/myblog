@@ -86,46 +86,6 @@
       </tags>
   </entry>
   <entry>
-    <title>C/C++ 内存布局</title>
-    <url>/myblog/2020/09/22/C/C++%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</url>
-    <content><![CDATA[<hr>
-<h2 id="C-C-内存布局"><a href="#C-C-内存布局" class="headerlink" title="C/C++ 内存布局"></a>C/C++ 内存布局</h2><h4 id="一、可执行映像"><a href="#一、可执行映像" class="headerlink" title="一、可执行映像"></a>一、可执行映像</h4><p>&emsp;&emsp;当生成C/C++程序的时候，链接器生成可执行文件。在UNIX和大多数游戏主机上面使用一种 <strong><em>可执行与可链接格式(executable and linkable format, ELF)</em></strong> 。在这些平台上的可执行文件使用后缀 <strong><em>.elf</em></strong> 。在Windows中的可执行文件同意类似与ELF，使用 <strong><em>.exe</em></strong> 作为扩展名。</p>
-<p>映像文件一般最少由一下几个部分构成：</p>
-<ul>
-<li><p>代码段(text/code segement)</p>
-<blockquote>
-<p>程序中定义的函数的全部机械码</p>
-</blockquote>
-</li>
-<li><p>数据段(data segment)</p>
-<blockquote>
-<p>已经初始化的全部静态变量<br>将由连接器为其分配内存，并且填如适当的初始值</p>
-</blockquote>
-</li>
-<li><p>BBS 段(BBS segement)</p>
-<blockquote>
-<p>BBS是一种老旧的叫法，意为 <strong><em>“由符号开始的块(block started by symbol)”</em></strong>。包含程序定义中所有的未初始化的全局变量和静态变量，在C/C++中未初始化的全局变量和静态变量全为零。</p>
-</blockquote>
-</li>
-<li><p>只读数据段(read only data segement)</p>
-<blockquote>
-<p> 又称为 <strong><em>rodata</em></strong> 段,包含程序中定义的只读(常量)全局变量。<br> 比如：浮点常量，用const关键字声名的全局对象实例……</p>
-<blockquote>
-<p>tips: 编译器通常会把整数常量视为<strong>明示常量</strong>(manifast constant)，并且直接把明示常量插入机器码中，直接占用代码段的存储空间而不存储于只读数据段。</p>
-</blockquote>
-</blockquote>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>Memory Management</tag>
-        <tag>GameDev</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Linkers and loaders (1)</title>
     <url>/myblog/2020/10/24/C/Linkers%20and%20Loads/</url>
     <content><![CDATA[<h1 id="Linkers-and-Loads"><a href="#Linkers-and-Loads" class="headerlink" title="Linkers and Loads"></a>Linkers and Loads</h1><font size = 4.5>
@@ -197,6 +157,46 @@
       <tags>
         <tag>Linkers and loaders</tag>
         <tag>Operation Systems</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C/C++ 内存布局</title>
+    <url>/myblog/2020/09/22/C/C++%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</url>
+    <content><![CDATA[<hr>
+<h2 id="C-C-内存布局"><a href="#C-C-内存布局" class="headerlink" title="C/C++ 内存布局"></a>C/C++ 内存布局</h2><h4 id="一、可执行映像"><a href="#一、可执行映像" class="headerlink" title="一、可执行映像"></a>一、可执行映像</h4><p>&emsp;&emsp;当生成C/C++程序的时候，链接器生成可执行文件。在UNIX和大多数游戏主机上面使用一种 <strong><em>可执行与可链接格式(executable and linkable format, ELF)</em></strong> 。在这些平台上的可执行文件使用后缀 <strong><em>.elf</em></strong> 。在Windows中的可执行文件同意类似与ELF，使用 <strong><em>.exe</em></strong> 作为扩展名。</p>
+<p>映像文件一般最少由一下几个部分构成：</p>
+<ul>
+<li><p>代码段(text/code segement)</p>
+<blockquote>
+<p>程序中定义的函数的全部机械码</p>
+</blockquote>
+</li>
+<li><p>数据段(data segment)</p>
+<blockquote>
+<p>已经初始化的全部静态变量<br>将由连接器为其分配内存，并且填如适当的初始值</p>
+</blockquote>
+</li>
+<li><p>BBS 段(BBS segement)</p>
+<blockquote>
+<p>BBS是一种老旧的叫法，意为 <strong><em>“由符号开始的块(block started by symbol)”</em></strong>。包含程序定义中所有的未初始化的全局变量和静态变量，在C/C++中未初始化的全局变量和静态变量全为零。</p>
+</blockquote>
+</li>
+<li><p>只读数据段(read only data segement)</p>
+<blockquote>
+<p> 又称为 <strong><em>rodata</em></strong> 段,包含程序中定义的只读(常量)全局变量。<br> 比如：浮点常量，用const关键字声名的全局对象实例……</p>
+<blockquote>
+<p>tips: 编译器通常会把整数常量视为<strong>明示常量</strong>(manifast constant)，并且直接把明示常量插入机器码中，直接占用代码段的存储空间而不存储于只读数据段。</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>Memory Management</tag>
+        <tag>GameDev</tag>
       </tags>
   </entry>
   <entry>
@@ -345,10 +345,9 @@
         <category>Operating Systems</category>
       </categories>
       <tags>
-        <tag>Memory Management</tag>
         <tag>Operation Systems</tag>
+        <tag>Memory Management</tag>
         <tag>Virtual Memory</tag>
-        <tag>[object Object]</tag>
       </tags>
   </entry>
   <entry>
