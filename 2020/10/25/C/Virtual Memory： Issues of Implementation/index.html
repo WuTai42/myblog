@@ -1,0 +1,332 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Virtual Memory Series I | WuTai's Blog</title><meta name="keywords" content="Operation Systems,Memory Management,Virtual Memory,[object Object]"><meta name="author" content="WuTai"><meta name="copyright" content="WuTai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="Virtual Memory： Issues of Implementation ---  In 1998,  there has not been much agreement on the form that what kind of support should modern processors take for “Virtual Memory”. Thus in that time th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Virtual Memory Series I">
+<meta property="og:url" content="http://example.com/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/index.html">
+<meta property="og:site_name" content="WuTai&#39;s Blog">
+<meta property="og:description" content="Virtual Memory： Issues of Implementation ---  In 1998,  there has not been much agreement on the form that what kind of support should modern processors take for “Virtual Memory”. Thus in that time th">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/hui-2.jpg">
+<meta property="article:published_time" content="2020-10-25T14:10:07.267Z">
+<meta property="article:modified_time" content="2020-10-29T06:23:45.344Z">
+<meta property="article:author" content="WuTai">
+<meta property="article:tag" content="Operation Systems">
+<meta property="article:tag" content="Memory Management">
+<meta property="article:tag" content="Virtual Memory">
+<meta property="article:tag" content="[object Object]">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/hui-2.jpg"><link rel="shortcut icon" href="/myblog/img/favicon.png"><link rel="canonical" href="http://example.com/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/myblog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/myblog/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-10-29 14:23:45'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/myblog/atom.xml" title="WuTai's Blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/myblog/img/richang-1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/myblog/archives/"><div class="headline">Articles</div><div class="length_num">6</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/myblog/tags/"><div class="headline">Tags</div><div class="length_num">10</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/myblog/categories/"><div class="headline">Categories</div><div class="length_num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Virtual-Memory%EF%BC%9A-Issues-of-Implementation"><span class="toc-text">Virtual Memory： Issues of Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81BASIC-CONCEPTS"><span class="toc-text">一、BASIC CONCEPTS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Page-table-entries"><span class="toc-text">1、Page table entries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Translation-lookaside-buffers"><span class="toc-text">2、Translation lookaside buffers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81PAGE-TABLE-ORGANIZATION"><span class="toc-text">二、PAGE TABLE ORGANIZATION</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81-Hierarchical-page-tables"><span class="toc-text">1、 Hierarchical page tables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Top-down-traversal"><span class="toc-text">2、Top-down traversal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81Bottom-up-traversal"><span class="toc-text">3、Bottom-up traversal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4%E3%80%81Inverted-page-tables"><span class="toc-text">4、Inverted page tables</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81DETAILS-AND-THEIR-DEVILS"><span class="toc-text">三、DETAILS (AND THEIR DEVILS)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81Share-memory"><span class="toc-text">1、Share memory</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2%E3%80%81Address-space-identifier-versus-segmentation"><span class="toc-text">2、Address-space identifier versus segmentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E3%80%81TLBs-revisited"><span class="toc-text">3、TLBs  revisited</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Foresight"><span class="toc-text">四、Foresight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%94%E3%80%81Typical-architecture"><span class="toc-text">五、Typical architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1%E3%80%81MIPS-Architecture"><span class="toc-text">1、MIPS Architecture</span></a></li></ol></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(/myblog/img/hui-2.jpg)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/myblog/">WuTai's Blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">Virtual Memory Series I</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-10-25T14:10:07.267Z" title="Created 2020-10-25 22:10:07">2020-10-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-10-29T06:23:45.344Z" title="Updated 2020-10-29 14:23:45">2020-10-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/myblog/categories/Operating-Systems/">Operating Systems</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h1 id="Virtual-Memory：-Issues-of-Implementation"><a href="#Virtual-Memory：-Issues-of-Implementation" class="headerlink" title="Virtual Memory： Issues of Implementation"></a>Virtual Memory： Issues of Implementation</h1><font size = 4.5>
+---
+
+<p>In 1998,  there has not been much agreement on the form that what kind of support should modern processors take for “Virtual Memory”.</p>
+<p>Thus in that time they have two ways for system-level software but seems somewhat unattractive:</p>
+<ol>
+<li>Writing software to fit many different architectures, which can compromise performance and reliabilities.</li>
+<li>Inserting layers of software to emulate a particular hardware interface, which essentially forces one hardware design to look like another. Inserting this <strong>hardware abstraction layer</strong> hides hardware particulars from the higher levels of software but also compromise performance and compatibility.</li>
+</ol>
+<p>Today’s  OSs and microprocessor are geared toward demand-paged virtual memory.</p>
+<h3 id="一、BASIC-CONCEPTS"><a href="#一、BASIC-CONCEPTS" class="headerlink" title="一、BASIC CONCEPTS"></a>一、BASIC CONCEPTS</h3><hr>
+<p>A well-designed virtual-memory system system:</p>
+<ul>
+<li>The main memory holds only the most often used portions of a process’s address space.</li>
+<li>Other portions are stored on disk and retrieved as needed.</li>
+</ul>
+<p>The mapping is a function, a given virtual page can have only one physical location.  However, the inverse mapping is not necessarily a function. This allows several virtual pages mapped to the same page frame. This is called <code>virtual-address aliasing</code>, which lets processes or threads share memory and supports different ‘views’ of data with different protections or behaviors.</p>
+<p>If an item can be paged, it implies that the item resides in virtual space. The OS allocates physical memory for the item itself only when the item is paged in.</p>
+<h3 id="1、Page-table-entries"><a href="#1、Page-table-entries" class="headerlink" title="1、Page table entries"></a>1、Page table entries</h3><p>At the minimum, a PTE indicates whether its virtual page is in memory, on disk, or unallocated.</p>
+<p>Form a PTE, the OS must be able to determine:</p>
+<ul>
+<li>the ID of the page’s owner </li>
+<li>the virtual page number</li>
+<li>the page’s location in memory (page frame number) or location on disk (an offset into a swap file)</li>
+<li>a valid bit contains a valid translation or not</li>
+<li>a reference bit, whether the page was recently accessed</li>
+<li>a modify bit, whether the page was recently written</li>
+<li>page-protection bits, read-write、read-only and so on</li>
+</ul>
+<p>However, for efficiency reasons, all of the information an OS needs <strong>is rarely stored explicitly in each PTE.</strong></p>
+<h3 id="2、Translation-lookaside-buffers"><a href="#2、Translation-lookaside-buffers" class="headerlink" title="2、Translation lookaside buffers"></a>2、Translation lookaside buffers</h3><p>To speed translation, most hardware systems provide a cache for PTEs, called a translation lookaside buffer(TLB).</p>
+<p>In some implementations the OS searches the page table after a TLB miss; in others, a hardware state machine conducts the search.</p>
+<p>If a page fault interrupts the OS, which must then do one of three things:</p>
+<ol>
+<li>Retrieve the page from disk and place it into memory.</li>
+<li>Create a new page if the page does not exist (as when a process allocates a new stack frame in virgin territory).</li>
+<li>If the access is to illegal space——send the process an error signal.</li>
+</ol>
+<p>Faulting address: The virtual address causing a TLB miss. This is not meant to imply that all TLB misses result in page faults.</p>
+<p>The inclusion between the TLB and main memory: If a page is in memory, its mapping <strong>may or may not be in the TLB</strong>, but if a page’s mapping is in the TLB, the page <strong>must be in physical memory.</strong> </p>
+<h3 id="二、PAGE-TABLE-ORGANIZATION"><a href="#二、PAGE-TABLE-ORGANIZATION" class="headerlink" title="二、PAGE TABLE ORGANIZATION"></a>二、PAGE TABLE ORGANIZATION</h3><hr>
+<p>Few generations ago, we use signal-level table, <strong>direct table</strong>.</p>
+<p>Table walking: the search of the page table.</p>
+<p>There are two primary types of page table organization: <code>forward-mapped or hierarchical page table</code> index by the virtual page number; and the <code>inverse mapped or inverted page table</code> index by the page frame number.</p>
+<h3 id="1、-Hierarchical-page-tables"><a href="#1、-Hierarchical-page-tables" class="headerlink" title="1、 Hierarchical page tables"></a>1、 Hierarchical page tables</h3><p>Based on the idea: <strong>A large data array can be mapped by a smaller array, which can in turn be mapped be an even smaller array.</strong></p>
+<p>Most OSs wire down root-level table in memory while the process is running.</p>
+<p>There are two access methods for the hierarchical page table: <code>top-down</code> or <code>bottom-up</code>.</p>
+<p>Top-down: uses physical address to reference the PTEs in the table.</p>
+<p>Bottom-up: uses virtual address.</p>
+<h3 id="2、Top-down-traversal"><a href="#2、Top-down-traversal" class="headerlink" title="2、Top-down traversal"></a>2、Top-down traversal</h3><p>Often used in hardware table-walking schemes(Inter’s IA-32 architecture).</p>
+<h3 id="3、Bottom-up-traversal"><a href="#3、Bottom-up-traversal" class="headerlink" title="3、Bottom-up traversal"></a>3、Bottom-up traversal</h3><p>The top-down access method requires as many memory references as there are table levels.</p>
+<p>On a TLB miss, the virtual address for this user PTE is used to load the PTE from the user page table.</p>
+<p>The following pseudo-code briefly illustrates these steps:</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">load user data /* load misses TLB */</span><br><span class="line">    	/* invokes TLB-miss handler */</span><br><span class="line">    	construct virtual address for user PTE</span><br><span class="line">	    load user PTE /* load misses TLB */</span><br><span class="line">	    	/* invoke root TLB-miss handler: */</span><br><span class="line">		    construct physcial address for root PTE</span><br><span class="line">		    load root PTE /* can not cause TLB miss, because it uses a </span><br><span class="line">            				physical address*/</span><br><span class="line">             put root PTE into TLB</span><br><span class="line">             jump to faulting instruction</span><br><span class="line">        /* return to user TLB-miss handler: */</span><br><span class="line">        load user PTE /* this time load succeeds */</span><br><span class="line">        put user PTE into TLB</span><br><span class="line">        jump to faulting instruction</span><br><span class="line">/* return to user mode */</span><br><span class="line">load user data /* this time load succeeds */</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+<h3 id="4、Inverted-page-tables"><a href="#4、Inverted-page-tables" class="headerlink" title="4、Inverted page tables"></a>4、Inverted page tables</h3><p>Instead of one entry for every virtual page belonging to a process, the inverted page table has <strong>one entry for every page frame in main memory.</strong></p>
+<p>The index of the PTE in the inverted table is equal to the page frame number of the page it maps. Thus, rather than scaling with the size of the virtual space, it <strong>scales with the size of physical memory.</strong> It compact in size, making it a good candidate for the hardware-managed mechanism that need the table to be wired down in memory.</p>
+<p>Since different virtual page numbers might produce identical hash values, a <code>collision-chain</code> mechanism is used to let these mapping exist int the table simultaneously.</p>
+<p>Noting that in classical inverted-table implementations, the PTE is too large compare to hierarchical table. As a trade-off to keep the table small, the designers of early systems increased the number of memory accesses per lookup. They added a level of indirection, the <strong>hash anchor table(HAT).</strong></p>
+<p>Since the entries in the hash anchor table are smaller than the entries in the inverted table, it is more memory efficient <strong>to increase the size of the hash anchor table to reduce the average collision-chain length.</strong></p>
+<p>the following steps briefly illustrate this mechanism:</p>
+<figure class="highlight latex"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Step 1:</span><br><span class="line">	faulting virtual page number is hashed, indexing the hash anchor table index.</span><br><span class="line">	Corresponding anchor-table entry is loaded and points to the chain head for that hash value.</span><br><span class="line">step 2:</span><br><span class="line">	The indecated PTE loaded.</span><br><span class="line">	Comparing its virtual page number to the faulting virtual page number.</span><br><span class="line">	if (marched) </span><br><span class="line">		step 3a:</span><br><span class="line">			Algorithm terminates, the mapping, composed of the virtual page number and the page 				frame numbers(PTE&#x27;s index), is placed into the TLB.</span><br><span class="line">	else</span><br><span class="line">		step 3b</span><br><span class="line">			The PTE referrences the next entry in the chain, or indicates that it is the last chain 			in the chain.</span><br><span class="line">If there is a next entry, it is loaded and compared.</span><br><span class="line">If the last entry fails to match, algorithm terminates and cases a page fault.</span><br><span class="line">			</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、DETAILS-AND-THEIR-DEVILS"><a href="#三、DETAILS-AND-THEIR-DEVILS" class="headerlink" title="三、DETAILS (AND THEIR DEVILS)"></a>三、DETAILS (AND THEIR DEVILS)</h3><hr>
+<p>The choice between hierarchical and inverted page tables is not an obvious one: There are many trade-offs between performance and memory usage. Implementations of shared memory width vary widely in performance, <strong>especially with different hardware support</strong>. (i.e. virtual caches requires more consistency management than physical caches).</p>
+<p>The address-space protection scheme is also heavily dependent on hardware support and has great impact on the shared-memory implementation.</p>
+<p>Also, the TLB can be managed by the OS or managed in hardware, presenting a trade-off between flexibility and performance. </p>
+<p>It is not surprising that <strong>the interactions are often subtle and  nonintuitive.</strong></p>
+<h3 id="1、Share-memory"><a href="#1、Share-memory" class="headerlink" title="1、Share memory"></a>1、Share memory</h3><p>There are several implementation possibilities for shared memory. One of the most common is <code>virtual address aliasing</code>, or simply <code>aliasing</code>. In this scheme, each mapping to the same physical page requires its own logical PTE.</p>
+<p>Maintaining multiple PTEs makes it possible for different processes:</p>
+<ul>
+<li>Using different virtual address for the same physical data.</li>
+<li>Mapping the same physical data with different protections.</li>
+<li>For different virtual references to the same physical data to cause different behaviors. </li>
+</ul>
+<p>primary disadvantage of aliasing: Increasing overhead of managing multiple mappings to the same physical page.</p>
+<p>A variation on aliasing is to <strong>share portions of page tables whenever data is shared.</strong></p>
+<p>Compared to the normal aliasing mechanism, this variation reduces the overhead of mapping PTEs and reduces the impact of multiple PTEs on the TLB.</p>
+<p>Disadvantage: It can require sharing at large granularities (It can be overcome if the hardware translation mechanism is segmented and supports protection at the segment level).</p>
+<p>Another alternative to aliasing is to have all processes share a global virtual address space. This space is often called a “flat” address space because <strong>it is not divided into disjunct per-process spaces by address-space identifiers.</strong></p>
+<p>Typically, these signal address-space OSs map the entire space of all processes with a single page table, which considerably reduces the management overhead. (Unix-based OSs and PA-RISC system use a global address space)</p>
+<h3 id="2、Address-space-identifier-versus-segmentation"><a href="#2、Address-space-identifier-versus-segmentation" class="headerlink" title="2、Address-space identifier versus segmentation"></a>2、Address-space identifier versus segmentation</h3><p> Two common hardware assists for providing address-space protection are <code>address-space identifiers</code> and <code>page segmentation</code>.</p>
+<p><strong>Address-space identifiers</strong> found in: <code>MIPS</code>, <code>Alpha</code>, and <code>sparc</code> architectures, extend virtual addresses and distinguish them form those generate by different processes. multiple processes can coexist, each thinking it owns the full extend of a 32-bit address space. Each process is unable to produce addresses that mimic those of other processes, because to do so it must control the contents of the protected register holding the address-space identifier.</p>
+<p>The OS place a process’s address-space identifier in a protected register, and every virtual address the process generates is concatenated with the address-space identifier.</p>
+<p><strong>In page segmentation</strong>, (as implemented in the <code>PowerPC</code>, <code>PA-RISC</code> , and <code>X86</code> architectures), virtual-physical translation occurs in two steps: </p>
+<ol>
+<li>User addresses are mapped onto a global address at the granularity of segments.</li>
+<li>Virtual addresses from the global space are mapped onto physical memory at the granularity of pages.</li>
+</ol>
+<p>A process address space is usually composed of many segments, so the OS maintains a set of segment identifiers for each process. It can also provide address-space protection.</p>
+<p>Segment translation from the process address space to the global address is like the hardware scheme for address-space identifiers.</p>
+<p>Segmentation is therefore analogous to having multiple address-space identifiers per process—one for each segment in the user address space.</p>
+<p>Address-space identifiers and segmentation interact with shared memory differently. Conceptually, shared memory acts in opposition to address-space protection schemes. </p>
+<p>With address-space identifiers, this is often done by explicitly duplicating mapping information across page tables. Or by marking a shared page as visible to all processes—explicitly turning off protection for that page.</p>
+<p>Segments, in contrast, allow both protection and fine-grained sharing. Two processes can safely share a segment, and can do so without making segment visible to other processes.</p>
+<h3 id="3、TLBs-revisited"><a href="#3、TLBs-revisited" class="headerlink" title="3、TLBs  revisited"></a>3、TLBs  revisited</h3><p>(tips: flush–&gt;means to clean all.)</p>
+<p>Either the OS or the hardware can refill the TLB when a TLB miss occurs.</p>
+<p><strong>Hardware-managed TLB</strong>: a hardware state machine walks the page table, there is no interrupt or interaction with the instruction cache.</p>
+<p><strong>Software-managed TLB</strong>: the general interrupt mechanism invokes a software TLB-miss handler — a primitive in the OS that is usually 10-100 instructions long. The use of the interrupt mechanism adds to the cost by flushing the pipeline, possibly removing many instructions from the reorder buffer. This can result in hundreds of cycles.</p>
+<p>However, the software-managed TLB design allows the OS to choose any page table organization, whereas the hardware-managed scheme defines a page table organization for the OS. This flexibility in the software-managed scheme can outweigh its potentially higher per-miss cost .</p>
+<p>The PA-7200 uses a hybrid approach,  implementing the initial probe of its hashed page table in hardware, and — if this initial probe fails — walking the rest of the page table in software.</p>
+<p>TLB does not need to be flushed on process context switch unless there are globally shared pages. </p>
+<p>**Flushing ** is typically required only whenever the OS reassigns an address-space identifier or segment identifier to a new process (such as at process creation), or when there are fewer address-space identifiers than currently active processes, which necessitates a temporary ID remapping. If the protection mechanism goes unused flushing is also required. </p>
+<p>In most case, only those entries tagged with that address-space identifier need to be flushed.</p>
+<p>OS must often <strong>invalidate the entire TLB contents</strong> or **individually invalidate each entry that matches the address-space identifier. Typically, it is cheaper to invalidate all TLB contents than to maintain a list of entries to be flushed on context switch as this list will typically be large and expensive to maintain. </p>
+<h3 id="四、Foresight"><a href="#四、Foresight" class="headerlink" title="四、Foresight"></a>四、Foresight</h3><p>There is wide diversity in how today’s commercial processors support memory management. However, the specific details of one processor’s memory-management architecture do not seem to confer a clear performance advantage over another’s. Why? <strong>incompatible</strong> from inadequate hardware support.</p>
+<p>Virtual caches requires no address translation when the data is found in the caches are large enough, there is rarely a need to go to memory. Address translation would be performed only on the rare cache miss and could therefore afford to be expensive.</p>
+<p>Instead of using hardware, the OS itself could perform virtual-memory functions — including address translation and protection checks — resulting in increased flexibility and simplifying the job of porting system software.</p>
+<h3 id="五、Typical-architecture"><a href="#五、Typical-architecture" class="headerlink" title="五、Typical architecture"></a>五、Typical architecture</h3><h3 id="1、MIPS-Architecture"><a href="#1、MIPS-Architecture" class="headerlink" title="1、MIPS Architecture"></a>1、MIPS Architecture</h3><p>OS handles TLB misses entirely in software. The OS walks the page table, fills the TLB, and can implement virtually any TLB replacement policy.</p>
+<p>The hardware supports a bottom-up hierarchical page table through the TLB context register, which holds a virtual address partitioned into a software-loaded segment and a hardware-loaded segment.</p>
+</font>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">WuTai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/">http://example.com/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/myblog/tags/Operation-Systems/">Operation Systems</a><a class="post-meta__tags" href="/myblog/tags/Memory-Management/">Memory Management</a><a class="post-meta__tags" href="/myblog/tags/Virtual-Memory/">Virtual Memory</a><a class="post-meta__tags" href="/myblog/tags/object-Object/">[object Object]</a></div><div class="post_share"><div class="social-share" data-image="/myblog/img/hui-2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/myblog/2020/10/24/C/Linkers%20and%20Loads/"><img class="next-cover" src="/myblog/img/hui-7.png" onerror="onerror=null;src='/myblog/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Linkers and loaders (1)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/myblog/2020/10/24/C/Linkers and Loads/" title="Linkers and loaders (1)"><img class="cover" src="/myblog/img/hui-7.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-24</div><div class="title">Linkers and loaders (1)</div></div></a></div><div><a href="/myblog/2020/09/22/C/C++内存布局/" title="C/C++ 内存布局"><img class="cover" src="/myblog/img/hui-5-yashuo.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-22</div><div class="title">C/C++ 内存布局</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div class="comment-switch"><span class="first-comment">V</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">a</span></div></div><div class="comment-wrap"><div></div><div></div><div></div><div></div><div></div><div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By WuTai</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/myblog/js/utils.js"></script><script src="/myblog/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
