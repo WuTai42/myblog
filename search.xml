@@ -1058,7 +1058,12 @@
 <p><strong>阻塞态 —-&gt; 就绪态</strong>：当进程所等待的事件到达后，它的状态将从阻塞态转移到就绪态</p>
 <h4 id="4、进程通信方式"><a href="#4、进程通信方式" class="headerlink" title="4、进程通信方式"></a>4、进程通信方式</h4><p>进程的交互协作需要两个基本元素：同步和通信</p>
 <p>同步用于进程的互斥，通信则用于进程间的协作。消息通信就能提供这两个基本元素。</p>
-<h4 id="5、进程间的制约关系"><a href="#5、进程间的制约关系" class="headerlink" title="5、进程间的制约关系"></a>5、进程间的制约关系</h4><h4 id="6、进程与线程之间的区别"><a href="#6、进程与线程之间的区别" class="headerlink" title="6、进程与线程之间的区别"></a>6、进程与线程之间的区别</h4><p>之前对进程概念的讨论体现了以下两个概念：<strong>资源占用</strong>，<strong>调度/执行</strong></p>
+<h4 id="5、进程间的制约关系"><a href="#5、进程间的制约关系" class="headerlink" title="5、进程间的制约关系"></a>5、进程间的制约关系</h4><p>进程间的制约关系可以分为以下两种：</p>
+<ul>
+<li>资源共享：间接制约关系</li>
+<li>进程合作：直接制约关系</li>
+</ul>
+<h4 id="6、进程与线程之间的区别"><a href="#6、进程与线程之间的区别" class="headerlink" title="6、进程与线程之间的区别"></a>6、进程与线程之间的区别</h4><p>之前对进程概念的讨论体现了以下两个概念：<strong>资源占用</strong>，<strong>调度/执行</strong></p>
 <p>这两个概念在进程的概念中得到了统一，但是在现代的操作系统设计上，这两个概念是相互独立的。为了区分这两个概念，把进程调度的实体称为：<strong>线程或者轻量级进程（Lightweight Process）</strong>，而在考虑资源的权属上把拥有资源的个体称为<strong>进程</strong>或者<strong>任务(Task)</strong></p>
 <p>在多线程系统中，进程是参与资源分配，以及权限保护的基本单位，它包括：</p>
 <ul>
@@ -1216,7 +1221,8 @@
 <li>(如果会导致死锁)拒绝创建进程</li>
 </ul>
 <p>$$<br>考虑一个有n个处理器，m种不同类型资源的系统：R = (R_1, R_2,……, R_m)系统种的全部资源<br>$$</p>
-<p>$$<br>资源申请矩阵：<br>\begin{pmatrix}<br>      C_{11} &amp; C_{22} &amp; … &amp; C_{1m} \<br>      C_{21} &amp; C_{22} &amp; … &amp; C_{2m} \<br>      … &amp; … &amp; … &amp; … \<br>      C_{n1} &amp; C_{n2} &amp; … &amp; C_{nm}<br>\end{pmatrix}<br>$$</p>
+<p>$$<br>资源申请矩阵：(这个模板不支持矩阵，很烦，请自行想象)</p>
+<p>\begin{bmatrix}<br>C_{11} &amp; C_{12} &amp; \ldots &amp; C_{1n}\<br>C_{21} &amp; C_{22} &amp; \ldots &amp; C_{2n}\<br>\vdots &amp; \vdots &amp; \ddots &amp; \vdots\<br>C_{n1} &amp; C_{n2} &amp; \ldots &amp; C_{nn}\<br>\end{bmatrix}<br>$$</p>
 <p>$$<br>C_{ij} = 进程i申请资源j的总数量,死锁避免方案可以要求在创建一个新进程的P(n + 1)时有：<br>$$</p>
 <p>$$<br>R \geq C_{(n+1)j} + \sum_{i=1}^{n}C_{ij}<br>$$</p>
 <p>也就是说，仅当所创建的进程对各类资源的最大资源需求量加上系统中已有进程对各类资源的申请量的总和，小于系统中各类资源的总量时，该进程才被允许创建。</p>
@@ -1224,7 +1230,9 @@
 <ul>
 <li>(如果会导致死锁)拒绝分配资源 —-&gt; 又称为银行家算法</li>
 </ul>
-<h4 id="10、信号量机制，PV操作基本概念"><a href="#10、信号量机制，PV操作基本概念" class="headerlink" title="10、信号量机制，PV操作基本概念"></a>10、信号量机制，PV操作基本概念</h4>]]></content>
+<h4 id="10、信号量机制，PV操作基本概念"><a href="#10、信号量机制，PV操作基本概念" class="headerlink" title="10、信号量机制，PV操作基本概念"></a>10、信号量机制，PV操作基本概念</h4><p>（想要详细了解进程的同步，通信，信号量等机制详见我的另一篇博客 并发：互斥与同步的各种实现 ）</p>
+<p>当然，这些东西仅供参考，60分左右没有问题吧。。。<strong>想要考好还是得去背书</strong>(建议还是去看课本)</p>
+]]></content>
       <categories>
         <category>操作系统</category>
       </categories>
