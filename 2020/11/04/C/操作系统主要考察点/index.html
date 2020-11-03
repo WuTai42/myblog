@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>操作系统复习 | WuTai's Blog</title><meta name="keywords" content="学习笔记,操作系统"><meta name="author" content="WuTai"><meta name="copyright" content="WuTai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="操作系统主要考察点(期中) 1、操作系统主要功能及主要特征操作系统是控制应用程序的执行程序，同时也是应用程序和系统硬件之间的接口。OS 的设计应该努力满足以下3个目标:  便利性：使计算机便于使用 有效性：以更有效的方式使用系统资源 扩展能力：在不影响正常服务的前提下进行有效的开发、测试，并引入新的系统功能  作为用户与系统交互接口的操作系统一般来说 OS 通常从以下几个方面提供服务：  程序开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统复习">
+<meta property="og:url" content="http://example.com/2020/11/04/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E8%80%83%E5%AF%9F%E7%82%B9/index.html">
+<meta property="og:site_name" content="WuTai&#39;s Blog">
+<meta property="og:description" content="操作系统主要考察点(期中) 1、操作系统主要功能及主要特征操作系统是控制应用程序的执行程序，同时也是应用程序和系统硬件之间的接口。OS 的设计应该努力满足以下3个目标:  便利性：使计算机便于使用 有效性：以更有效的方式使用系统资源 扩展能力：在不影响正常服务的前提下进行有效的开发、测试，并引入新的系统功能  作为用户与系统交互接口的操作系统一般来说 OS 通常从以下几个方面提供服务：  程序开发">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mwrgdg.sn.files.1drv.com/y4pXRChVqDEQ3lnR4YfVe1dTrlNBN3qSz6c06JZAcsT4UAYpG4tX-pAc-AcqgrpsOfKcO-FAhwwAgO12v-7fc6-gQC2jeeYbyHfhVGA-mfGr2tV1L9XB0kuhyVh5Cvau-uEPNgwoZ31SvWkqAwZUqXQugJ8CUSv7IvzzrrNVkcyfii27msrLLIRuR8fQzjOI53_RO_D3snscCsGSqosM6xgXQ/hui-2.jpg?psid=1">
+<meta property="article:published_time" content="2020-11-03T23:19:19.245Z">
+<meta property="article:modified_time" content="2020-11-03T23:35:08.913Z">
+<meta property="article:author" content="WuTai">
+<meta property="article:tag" content="学习笔记">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mwrgdg.sn.files.1drv.com/y4pXRChVqDEQ3lnR4YfVe1dTrlNBN3qSz6c06JZAcsT4UAYpG4tX-pAc-AcqgrpsOfKcO-FAhwwAgO12v-7fc6-gQC2jeeYbyHfhVGA-mfGr2tV1L9XB0kuhyVh5Cvau-uEPNgwoZ31SvWkqAwZUqXQugJ8CUSv7IvzzrrNVkcyfii27msrLLIRuR8fQzjOI53_RO_D3snscCsGSqosM6xgXQ/hui-2.jpg?psid=1"><link rel="shortcut icon" href="/myblog/img/favicon.png"><link rel="canonical" href="http://example.com/2020/11/04/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E8%80%83%E5%AF%9F%E7%82%B9/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/myblog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/myblog/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: true,
+  postUpdate: '2020-11-04 07:35:08'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/myblog/atom.xml" title="WuTai's Blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/myblog/img/richang-1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/myblog/archives/"><div class="headline">Articles</div><div class="length_num">7</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/myblog/tags/"><div class="headline">Tags</div><div class="length_num">9</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/myblog/categories/"><div class="headline">Categories</div><div class="length_num">3</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><div id="sidebar"><i class="fas fa-arrow-right on" id="toggle-sidebar"></i><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar">     </div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E8%80%83%E5%AF%9F%E7%82%B9-%E6%9C%9F%E4%B8%AD"><span class="toc-text">操作系统主要考察点(期中)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD%E5%8F%8A%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="toc-text">1、操作系统主要功能及主要特征</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E7%94%A8%E6%88%B7%E4%B8%8E%E7%B3%BB%E7%BB%9F%E4%BA%A4%E4%BA%92%E6%8E%A5%E5%8F%A3%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">作为用户与系统交互接口的操作系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%9C%E4%B8%BA%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">作为资源管理器的操作系统</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%98%93%E6%89%A9%E5%B1%95%E6%80%A7"><span class="toc-text">操作系统的易扩展性</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2%E3%80%81%E5%B9%B6%E8%A1%8C%E4%B8%8E%E5%B9%B6%E5%8F%91%E7%9A%84%E6%A6%82%E5%BF%B5%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="toc-text">2、并行与并发的概念与区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3%E3%80%81%E8%BF%9B%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E7%BB%84%E6%88%90%EF%BC%8C%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%B8%89%E7%A8%8B%E7%8A%B6%E6%80%81%E5%8F%8A%E8%BD%AC%E7%A7%BB"><span class="toc-text">3、进程的概念及组成，进程的三程状态及转移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4%E3%80%81%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%96%B9%E5%BC%8F"><span class="toc-text">4、进程通信方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5%E3%80%81%E8%BF%9B%E7%A8%8B%E9%97%B4%E7%9A%84%E5%88%B6%E7%BA%A6%E5%85%B3%E7%B3%BB"><span class="toc-text">5、进程间的制约关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6%E3%80%81%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">6、进程与线程之间的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7%E3%80%81%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%9A%84%E5%8E%9F%E5%9B%A0%EF%BC%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6"><span class="toc-text">7、进程调度的原因，操作系统的三级调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8%E3%80%81%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%EF%BC%88FCFS%EF%BC%8CSPF%EF%BC%8CRR%EF%BC%89%EF%BC%8C%E5%91%A8%E8%BD%AC%E6%97%B6%E9%97%B4%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">8、进程调度算法（FCFS，SPF，RR），周转时间的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9%E3%80%81%E6%AD%BB%E9%94%81%E6%A6%82%E5%BF%B5%EF%BC%8C%E5%8E%9F%E5%9B%A0%EF%BC%8C%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6%EF%BC%8C%E9%A2%84%E9%98%B2%E5%8F%8A%E9%81%BF%E5%85%8D%E7%AE%97%E6%B3%95"><span class="toc-text">9、死锁概念，原因，必要条件，预防及避免算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E9%A2%84%E9%98%B2"><span class="toc-text">死锁预防</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E9%81%BF%E5%85%8D"><span class="toc-text">死锁避免</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10%E3%80%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6%EF%BC%8CPV%E6%93%8D%E4%BD%9C%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">10、信号量机制，PV操作基本概念</span></a></li></ol></li></ol></div></div></div><header class="post-bg" id="page-header" style="background-image: url(https://mwrgdg.sn.files.1drv.com/y4pXRChVqDEQ3lnR4YfVe1dTrlNBN3qSz6c06JZAcsT4UAYpG4tX-pAc-AcqgrpsOfKcO-FAhwwAgO12v-7fc6-gQC2jeeYbyHfhVGA-mfGr2tV1L9XB0kuhyVh5Cvau-uEPNgwoZ31SvWkqAwZUqXQugJ8CUSv7IvzzrrNVkcyfii27msrLLIRuR8fQzjOI53_RO_D3snscCsGSqosM6xgXQ/hui-2.jpg?psid=1)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/myblog/">WuTai's Blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">操作系统复习</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2020-11-03T23:19:19.245Z" title="Created 2020-11-04 07:19:19">2020-11-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2020-11-03T23:35:08.913Z" title="Updated 2020-11-04 07:35:08">2020-11-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/myblog/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><h3 id="操作系统主要考察点-期中"><a href="#操作系统主要考察点-期中" class="headerlink" title="操作系统主要考察点(期中)"></a>操作系统主要考察点(期中)</h3><hr>
+<h4 id="1、操作系统主要功能及主要特征"><a href="#1、操作系统主要功能及主要特征" class="headerlink" title="1、操作系统主要功能及主要特征"></a>1、操作系统主要功能及主要特征</h4><p>操作系统是<strong>控制应用程序的执行程序</strong>，同时也是<strong>应用程序和系统硬件之间的接口</strong>。OS 的设计应该努力满足以下3个目标:</p>
+<ul>
+<li>便利性：使计算机便于使用</li>
+<li>有效性：以更有效的方式使用系统资源</li>
+<li>扩展能力：在不影响正常服务的前提下进行有效的开发、测试，并引入新的系统功能</li>
+</ul>
+<h5 id="作为用户与系统交互接口的操作系统"><a href="#作为用户与系统交互接口的操作系统" class="headerlink" title="作为用户与系统交互接口的操作系统"></a>作为用户与系统交互接口的操作系统</h5><p>一般来说 OS 通常从以下几个方面提供服务：</p>
+<ul>
+<li>程序开发</li>
+<li>程序运行</li>
+<li>I/O 设备的访问</li>
+<li>系统的访问</li>
+<li>错误检测和响应</li>
+<li>日志</li>
+</ul>
+<p>典型的计算机系统中有以下3种主要接口：</p>
+<ul>
+<li>指令集架构 ISA：定义了计算机的机器语言指令系统，是<strong>计算机硬件和软件的分割线</strong>。我们通常使用的是其子集（用户级ISA），OS 能使用其他的一些机器语言指令（系统级ISA）。</li>
+<li>应用程序二进制接口 ABI：定义了在程序间进行二进制移植的标准，定义了 OS 的系统调用接口，以及在系统中通过用户级 ISA 能够使用的硬件资源和服务。</li>
+<li>应用程序编程接口 API ：API 允许应用程序访问系统的硬件资源和服务，这些服务由用户级 ISA 和高级语言库（HHL）来提供。</li>
+</ul>
+<h5 id="作为资源管理器的操作系统"><a href="#作为资源管理器的操作系统" class="headerlink" title="作为资源管理器的操作系统"></a>作为资源管理器的操作系统</h5><p>不能简单的说操作系统在控制数据的移动、储存和处理</p>
+<p>OS 作为控制机制和其他的控制机制有以下的区别：</p>
+<ul>
+<li>操作系统和其他的普通软件一样，也是处理器执行的一组程序</li>
+<li>操作系统经常转交控制权（给其他程序），然后需要借助处理器恢复得到控制权</li>
+</ul>
+<p>OS 的内核程序：包含操作系统中最经常使用的功能</p>
+<h5 id="操作系统的易扩展性"><a href="#操作系统的易扩展性" class="headerlink" title="操作系统的易扩展性"></a>操作系统的易扩展性</h5><p>操作系统的发展由以下几个方面推动：</p>
+<ul>
+<li>硬件升级和新型硬件的出现</li>
+<li>新设备的出现</li>
+<li>错误修复</li>
+</ul>
+<h4 id="2、并行与并发的概念与区别"><a href="#2、并行与并发的概念与区别" class="headerlink" title="2、并行与并发的概念与区别"></a>2、并行与并发的概念与区别</h4><p>如果某个系统支持两个或者多个动作（Action）<strong>同时存在</strong>，那么这个系统就是一个<strong>并发系统</strong>。如果某个系统支持两个或者多个动作<strong>同时执行</strong>，那么这个系统就是一个<strong>并行系统</strong>。并发系统与并行系统这两个定义之间的关键差异在于<strong>“存在”</strong>这个词。</p>
+<p>在并发程序中可以同时拥有两个或者多个线程。这意味着，如果程序在单核处理器上运行，那么这两个线程将交替地换入或者换出内存。这些线程是同时“存在”的——每个线程都处于执行过程中的某个状态。如果程序能够并行执行，那么就一定是运行在多核处理器上。此时，程序中的每个线程都将分配到一个独立的处理器核上，因此可以同时运行。</p>
+<p><strong>“并行”概念是“并发”概念的一个子集</strong>。也就是说，你可以编写一个拥有多个线程或者进程的并发程序，但如果没有多核处理器来执行这个程序，那么就不能以并行方式来运行代码。因此，凡是在求解单个问题时涉及多个执行流程的编程模式或者执行行为，都属于并发编程的范畴。</p>
+<h4 id="3、进程的概念及组成，进程的三程状态及转移"><a href="#3、进程的概念及组成，进程的三程状态及转移" class="headerlink" title="3、进程的概念及组成，进程的三程状态及转移"></a>3、进程的概念及组成，进程的三程状态及转移</h4><p>现代操作系统的设计。为了能满足系统中多个应用程序的执行的需要，且达到以下的设计目标：</p>
+<ul>
+<li>资源能被多个应用程序使用</li>
+<li>处理器需要在多个多个应用程序的执行过程中切换，以使这些应用程序的执行看上去好像在同时进行</li>
+<li>尽可能的提高处理器和I/O 设备的利用率</li>
+</ul>
+<p>为了能达到这些设计目标，所有的现代操作系统都将应用程序抽象为一个或者多个进程</p>
+<p>对于进程可以有以下几个不同的定义：</p>
+<ul>
+<li>一个正在执行的程序</li>
+<li>一个执行在计算机上的应用程序实例</li>
+<li>一个能够调度到处理器上执行的实体</li>
+<li>一个活动单元，包括一串指令的执行、当前状态，以及一组正在使用的资源</li>
+</ul>
+<p>我们还可以把进程当作一个包含多个元素的独立个体，其中最基本的两个元素—&gt; <strong>程序代码</strong>（可以在同一应用中创建的多个进程间共享） 和 与<strong>程序代码相关的一组数据</strong> </p>
+<p>在其执行过程中的任意一个节点上，所对应的进程拥有唯一标识其存在的元素，包括：</p>
+<ul>
+<li>标识符</li>
+<li>进程状态</li>
+<li>优先级</li>
+<li>进程计数器</li>
+<li>内存指针</li>
+<li>上下文</li>
+<li>I/O 状态</li>
+<li>记账信息</li>
+</ul>
+<p>这些信息被放在一个叫做 <strong>进程控制块</strong> 的数据结构中，往往由 OS 创建</p>
+<p>进程的三状态： 1、就绪态     2、运行态     3、阻塞态</p>
+<ul>
+<li>运行态：进程正在运行</li>
+<li>就绪态：进程已经准备好执行，如果分配了处理器，它可以立即投入执行</li>
+<li>阻塞态：进程在等待某事件的发生</li>
+</ul>
+<p><strong>就绪态 —-&gt; 运行态</strong>：处理器空闲的时候，处理器从就绪的进程中挑选一个进程将其投入运行，其状态也变为运行态</p>
+<p><strong>运行态 —-&gt; 就绪态</strong>：1、用完时间片 2、优先级调度（抢占和自愿）</p>
+<p><strong>运行态 —-&gt; 阻塞态</strong>：进程在执行过程中，因为请求一些暂时得不到而必须等待的服务时，从运行态转移到阻塞态（i.e. 1、进程调用一个操作系统提供的的服务：读写文件，访问共享内存……这些服务OS有可能不能及时提供。2、或者进程在执行过程中发出了I/O请求。 3、由于进程间通信的原因，一个进程的执行过程必须等待另一个进程的信息。）</p>
+<p><strong>阻塞态 —-&gt; 就绪态</strong>：当进程所等待的事件到达后，它的状态将从阻塞态转移到就绪态</p>
+<h4 id="4、进程通信方式"><a href="#4、进程通信方式" class="headerlink" title="4、进程通信方式"></a>4、进程通信方式</h4><p>进程的交互协作需要两个基本元素：同步和通信</p>
+<p>同步用于进程的互斥，通信则用于进程间的协作。消息通信就能提供这两个基本元素。</p>
+<h4 id="5、进程间的制约关系"><a href="#5、进程间的制约关系" class="headerlink" title="5、进程间的制约关系"></a>5、进程间的制约关系</h4><h4 id="6、进程与线程之间的区别"><a href="#6、进程与线程之间的区别" class="headerlink" title="6、进程与线程之间的区别"></a>6、进程与线程之间的区别</h4><p>之前对进程概念的讨论体现了以下两个概念：<strong>资源占用</strong>，<strong>调度/执行</strong></p>
+<p>这两个概念在进程的概念中得到了统一，但是在现代的操作系统设计上，这两个概念是相互独立的。为了区分这两个概念，把进程调度的实体称为：<strong>线程或者轻量级进程（Lightweight Process）</strong>，而在考虑资源的权属上把拥有资源的个体称为<strong>进程</strong>或者<strong>任务(Task)</strong></p>
+<p>在多线程系统中，进程是参与资源分配，以及权限保护的基本单位，它包括：</p>
+<ul>
+<li>容纳进程镜像的虚拟地址空间</li>
+<li>处理器的受保护访问，其他进程信息（用于通信），一组文件和I/O资源(设备和通道)</li>
+</ul>
+<p>进程可以包含一个或者多个线程，每个线程包括：</p>
+<ul>
+<li>线程的状态（运行态、就绪态等）</li>
+<li>线程上下文（未执行时），以及线程在进程中的执行的位置</li>
+<li>私有的执行栈</li>
+<li>静态存储空间和局部变量</li>
+<li>对系统资源的访问权限</li>
+</ul>
+<p>进程的线程共享它们父进程的状态，以及它们拥有的系统资源，并且它们共处于同一地址空间，访问同一组数据。</p>
+<p>线程概念的产生实际上是对计算机系统性能进行优化的结果</p>
+<h4 id="7、进程调度的原因，操作系统的三级调度"><a href="#7、进程调度的原因，操作系统的三级调度" class="headerlink" title="7、进程调度的原因，操作系统的三级调度"></a>7、进程调度的原因，操作系统的三级调度</h4><p>在多道程序系统中，内存中同时存在多个进程。每个进程要么在使用处理器，要么在等待某个事件发生（如I/O操作的完成）发生。如果在处理器或者处理器组执行一个进程的时候，还有其他进在等待执行，那么处理器就可以保持在忙碌状态。</p>
+<p>处理器调度的目的：以符合系统目标的方式将进程分配到处理器或者处理器组上执行，这些系统目标包括，响应时间、吞吐率，以及处理器的利用率等等。</p>
+<p>调度活动被分解为3个相互独立的功能：长期调度，中期调度，短期调度</p>
+<table>
+<thead>
+<tr>
+<th align="center">调度类型</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">长期调度</td>
+<td align="center">决定是否将一个新进程加入将待执行的进程池中</td>
+</tr>
+<tr>
+<td align="center">中期调度</td>
+<td align="center">决定哪个就绪进程部分或者全部载入内存</td>
+</tr>
+<tr>
+<td align="center">短期调度</td>
+<td align="center">决定哪个就绪进程将被处理器执行</td>
+</tr>
+</tbody></table>
+<h4 id="8、进程调度算法（FCFS，SPF，RR），周转时间的概念"><a href="#8、进程调度算法（FCFS，SPF，RR），周转时间的概念" class="headerlink" title="8、进程调度算法（FCFS，SPF，RR），周转时间的概念"></a>8、进程调度算法（FCFS，SPF，RR），周转时间的概念</h4><p>各种调度策略的特征</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">FCFS</th>
+<th align="center">RR</th>
+<th align="center">SPN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">选择函数</td>
+<td align="center">max[w]</td>
+<td align="center">常量</td>
+<td align="center">min[s]</td>
+</tr>
+<tr>
+<td align="center">策略模式</td>
+<td align="center">非抢占</td>
+<td align="center">抢占（用完时间片）</td>
+<td align="center">非抢占</td>
+</tr>
+<tr>
+<td align="center">吞吐量</td>
+<td align="center">不强调</td>
+<td align="center">如果时间片太小，吞吐量会降低</td>
+<td align="center">高</td>
+</tr>
+<tr>
+<td align="center">响应时间</td>
+<td align="center">可能很高，特别是进程时间差别很大的时候</td>
+<td align="center">为短进程提供良好的相应时间</td>
+<td align="center">为短进程提供良好的相应时间</td>
+</tr>
+<tr>
+<td align="center">开销</td>
+<td align="center">最小</td>
+<td align="center">最小</td>
+<td align="center">可能高</td>
+</tr>
+<tr>
+<td align="center">对进程的影响</td>
+<td align="center">对短进程和I/O型进程不利</td>
+<td align="center">公平对待</td>
+<td align="center">对长进程不利</td>
+</tr>
+<tr>
+<td align="center">饥饿现象</td>
+<td align="center">无</td>
+<td align="center">无</td>
+<td align="center">可能</td>
+</tr>
+</tbody></table>
+<p>与非抢占式策略相比，抢占式策略会导致更大的开销，但是可以从整体上为进程提供更好的服务。此外，采用高效的进程切换机制（可能有求于硬件），提供大容量的内存以便将更多的进程放入内存中……通过这些方法可以有效降低抢占式的开销。</p>
+<p>根据排队模型，周转时间(Turnaround Time, TAT)等于驻留时间Tr，或者这一进程在系统中花费的总时间(等待时间 + 服务时间)。另一个更有用的数据称为带权周转时间(Normalized Turnaround Time)，它是周转时间于服务时间的比值。这个值反映了进程的相对延迟。通常来说，进程的执行时间越长，可以容忍的延迟时间也越长。带权周转时间的最小值为1，该值增加，则意味着服务水平的增加。</p>
+<h4 id="9、死锁概念，原因，必要条件，预防及避免算法"><a href="#9、死锁概念，原因，必要条件，预防及避免算法" class="headerlink" title="9、死锁概念，原因，必要条件，预防及避免算法"></a>9、死锁概念，原因，必要条件，预防及避免算法</h4><p>死锁是指<strong>一组进程因为竞争系统资源或相互等待消息</strong>，而无法向前推进的状态。</p>
+<p>死锁一般都涉及两个或更多进程之间的相互冲突的资源请求。死锁的发生不仅取决于进程的动态执行路径，还取决于应用实现的具体细节。</p>
+<p>死锁发生的条件：</p>
+<p>(1) 互斥：资源只能由一个进程占用，如果资源被分配给了一个进程，则其他进程不可使用该进程</p>
+<p>(2) 占用并等待：进程必须占用分配给它的资源，且同时申请和等待其他资源</p>
+<p>(3) 不可剥夺：如果资源被某些进程占用，那么则不可能将其从进程中强行剥夺出来</p>
+<p>注意： 以上3个条件只是 必要条件 并非充分条件死锁的发生还需要第4个条件：</p>
+<p>(4) 环路等待：资源和进程的分配关系在资源分配图上表现为一个封闭的环路，其中，每个进程至少占用一个资源，且该资源同时被环路中的其他进程所申请</p>
+<p>导致死锁的条件</p>
+<table>
+<thead>
+<tr>
+<th align="center">可能导致死锁</th>
+<th align="center">死锁发生</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1、互斥</td>
+<td align="center">1、互斥</td>
+</tr>
+<tr>
+<td align="center">2、不可抢占</td>
+<td align="center">2、不可抢占</td>
+</tr>
+<tr>
+<td align="center">3、占用并等待</td>
+<td align="center">3、占用并等待</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">4、环路等待</td>
+</tr>
+</tbody></table>
+<p>解决死锁问题有3个方案：</p>
+<p>一、死锁预防：方案是破除死锁发生的4个条件之一</p>
+<p>二、死锁避免：方案是基于资源分配的当前状况，动态的做出资源分配决策</p>
+<p>三、死锁检测：方案检测系统中已经发生的死锁，并想办法打破进程间的死锁状态</p>
+<h5 id="死锁预防"><a href="#死锁预防" class="headerlink" title="死锁预防"></a>死锁预防</h5><p>简单的说，死锁的预防方案思想是设计一个系统，该系统能够<strong>去除死锁发生的可能</strong>。可以将死锁预防的方案可以归纳为2种：一种是<strong>直接方案</strong>，还有一种是<strong>间接方案</strong>。间接方案是破除死锁发生条件的前3条中的任意一条，而直接方案是预防环路等待条件的发生。</p>
+<p>1、互斥条件：</p>
+<p>一般来说，互斥条件与具体的资源属性有关，是很难破除的。如果对某些资源的访问需要互斥，则<strong>操作系统必须提供某种互斥机制</strong>。如文件的读写限制。但是当有多个进程在对该文件并发的写的时候</p>
+<p>2、占有并等待条件：</p>
+<p>可以采用以下的方法来破除：</p>
+<p>要求进程在执行前，一次性申请完它在执行过程种所有可能用到的资源。如果系统暂时无法满足它的资源申请要求，则进程必须等待直到系统拥有足够多的资源，并将资源一次性全部分配给它才能开始运行。</p>
+<p>注意：该方案可能导致系统的效率降低：</p>
+<ul>
+<li>进程可能在获得它运行所需的全部资源前需要等待很长时间。然而实际上，如果给它一部分资源，它便可以开始运行了</li>
+<li>分配给进程的资源可能长时间得不到使用，但别的进程也无法利用这些资源，然而，这些资源可能在它实际的执行路径中根被没有被使用</li>
+</ul>
+<p>3、不可抢占条件：</p>
+<p>破除该条件的方法有：</p>
+<ul>
+<li>如果进程占用了一些资源，且在后续资源请求下得不到满足的情况下，它就必须释放它已经占用的资源，并在后续的执行中一次性申请全部的资源(包括之前释放的和申请不到的资源)</li>
+<li>如果一个(高优先级)进程申请已经被一个(低优先级)进程把资源占用了。那么OS将从后者抢占资源将其分配给前者，该方法仅仅适用于任意两个进程都拥有不同优先级的情况，而且只能用在资源状态很容易保存和恢复的情况。(i.e. 处理器中的资源)</li>
+</ul>
+<p>4、环路等待条件：</p>
+<p>可以用有序资源分配的方法破除环路等待条件：先将资源进行线性编序，如果进程获得资源R，那么后续请求的资源序号都只能大于或者都小于R。</p>
+<p>然而破除环路等待条件还是可能会导致系统效率的降低，或者进程的执行速度降低，亦或不必要的资源分配请求拒绝等问题。</p>
+<h5 id="死锁避免"><a href="#死锁避免" class="headerlink" title="死锁避免"></a>死锁避免</h5><p>死锁预防的方法实际上是在满足资源请求的方式上做出某种限制，使其破除死锁发生的某一个条件，从而使得死锁不可能发生。破除死锁条件的方法上面已经讨论过了，正如讨论的那样，这些方法都会导致资源利用率的下降，或者进程执行速度的降低。死锁避免的方法与之有细微的差别，该方案允许死锁发生的前三个必要条件的存在，但是在资源分配的时候做出谨慎的决策，以避免死锁的发生。</p>
+<p>在死锁避免方案中，资源分配决策的制订，是基于(假如将资源分配出去)在未来是否会发生死锁来判断的。所以，死锁避免方案需要知道进程未来的资源请求。这种方案有很多种解法，这里主要介绍两种：</p>
+<ul>
+<li>(如果会导致死锁)拒绝创建进程</li>
+</ul>
+<p>$$<br>考虑一个有n个处理器，m种不同类型资源的系统：R = (R_1, R_2,……, R_m)系统种的全部资源<br>$$</p>
+<p>$$<br>资源申请矩阵：<br>\begin{pmatrix}<br>      C_{11} &amp; C_{22} &amp; … &amp; C_{1m} \<br>      C_{21} &amp; C_{22} &amp; … &amp; C_{2m} \<br>      … &amp; … &amp; … &amp; … \<br>      C_{n1} &amp; C_{n2} &amp; … &amp; C_{nm}<br>\end{pmatrix}<br>$$</p>
+<p>$$<br>C_{ij} = 进程i申请资源j的总数量,死锁避免方案可以要求在创建一个新进程的P(n + 1)时有：<br>$$</p>
+<p>$$<br>R \geq C_{(n+1)j} + \sum_{i=1}^{n}C_{ij}<br>$$</p>
+<p>也就是说，仅当所创建的进程对各类资源的最大资源需求量加上系统中已有进程对各类资源的申请量的总和，小于系统中各类资源的总量时，该进程才被允许创建。</p>
+<p>很显然，这个策略并不是最有效的，因为它假设的是最坏情况：所有进程同时申请最大数量的资源。</p>
+<ul>
+<li>(如果会导致死锁)拒绝分配资源 —-&gt; 又称为银行家算法</li>
+</ul>
+<h4 id="10、信号量机制，PV操作基本概念"><a href="#10、信号量机制，PV操作基本概念" class="headerlink" title="10、信号量机制，PV操作基本概念"></a>10、信号量机制，PV操作基本概念</h4></div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">WuTai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2020/11/04/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E8%80%83%E5%AF%9F%E7%82%B9/">http://example.com/2020/11/04/C/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%BB%E8%A6%81%E8%80%83%E5%AF%9F%E7%82%B9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/myblog/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a><a class="post-meta__tags" href="/myblog/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></div><div class="post_share"><div class="social-share" data-image="https://mwrgdg.sn.files.1drv.com/y4pXRChVqDEQ3lnR4YfVe1dTrlNBN3qSz6c06JZAcsT4UAYpG4tX-pAc-AcqgrpsOfKcO-FAhwwAgO12v-7fc6-gQC2jeeYbyHfhVGA-mfGr2tV1L9XB0kuhyVh5Cvau-uEPNgwoZ31SvWkqAwZUqXQugJ8CUSv7IvzzrrNVkcyfii27msrLLIRuR8fQzjOI53_RO_D3snscCsGSqosM6xgXQ/hui-2.jpg?psid=1" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/myblog/2020/10/25/C/Virtual%20Memory%EF%BC%9A%20Issues%20of%20Implementation/"><img class="next-cover" src="https://nargdg.sn.files.1drv.com/y4pWbhen9qUTbS-VBX30eH_t__K6KlfRtAxN93m6F32FpX5QZmjdf-dTqz37vLbk-X9U393IdXb5-T2huHiI2o-0VuOSr40zDTGrrjIyx684bZw3YkUMytSXyE0xo5wC5YFi75nfQ53h53Az3qTxX4EWNSQEq3IXpke3gARusClRNkfEj7DEjuWIwweOYYCH0-s9QrVi-7PtP3i1jR2cU4sAQ/hui-6.png?psid=1" onerror="onerror=null;src='/myblog/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Virtual Memory Series I</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/myblog/2020/10/07/C/并发：互斥与同步的各种实现/" title="并发：互斥与同步的各种实现"><img class="cover" src="https://lwth6g.sn.files.1drv.com/y4pXnYO2S7NHiAUeFmVQHKfem6mCardrridBn_Y2rH8ZdYvdKzzh4ZB5YYgXuK6gtjYJqJaIiwHxZYMZmiiYzvBJdpdRfP6Z1A543oQ5QmsnfZVw4KjFnn3vXPD_1I6eelmx20Y_rA-YQItQXESfdf3YSzFKBpxIV6drkY7FfHkgKMOPpk5pCiY7OijCsXLL49I3gTCP3zcZgieBRE7Qn5LCw/hui-7.png?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-07</div><div class="title">并发：互斥与同步的各种实现</div></div></a></div><div><a href="/myblog/2020/10/13/C/C++ 中 const 的使用要点/" title="C++ 中 const 的使用要点"><img class="cover" src="/myblog/img/hui-3.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-13</div><div class="title">C++ 中 const 的使用要点</div></div></a></div><div><a href="/myblog/2020/09/26/C/利用汇编深入学习C++/" title="利用汇编深入学习C++"><img class="cover" src="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-26</div><div class="title">利用汇编深入学习C++</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div class="comment-switch"><span class="first-comment">V</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">a</span></div></div><div class="comment-wrap"><div></div><div></div><div></div><div></div><div></div><div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 By WuTai</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/myblog/js/utils.js"></script><script src="/myblog/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
