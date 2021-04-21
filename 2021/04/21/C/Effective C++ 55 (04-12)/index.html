@@ -1,0 +1,269 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EffectC++ | WuTai's Blog</title><meta name="keywords" content="学习笔记"><meta name="author" content="WuTai"><meta name="copyright" content="WuTai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><meta name="description" content="04 确定对象使用前已经初始化（1）ABEntry::ABEntry(const std::string&amp; name, const std::string&amp; address, const std::list&amp; phones)                :theName(name),                theAddress(address),">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EffectC++">
+<meta property="og:url" content="http://example.com/2021/04/21/C/Effective%20C++%2055%20(04-12)/index.html">
+<meta property="og:site_name" content="WuTai&#39;s Blog">
+<meta property="og:description" content="04 确定对象使用前已经初始化（1）ABEntry::ABEntry(const std::string&amp; name, const std::string&amp; address, const std::list&amp; phones)                :theName(name),                theAddress(address),">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1">
+<meta property="article:published_time" content="2021-04-21T03:19:33.602Z">
+<meta property="article:modified_time" content="2021-04-21T03:20:33.831Z">
+<meta property="article:author" content="WuTai">
+<meta property="article:tag" content="学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1"><link rel="shortcut icon" href="/myblog/img/favicon.png"><link rel="canonical" href="http://example.com/2021/04/21/C/Effective%20C++%2055%20(04-12)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/myblog/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css"><script>var GLOBAL_CONFIG = { 
+  root: '/myblog/',
+  hexoversion: '5.1.1',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  ClickShowText: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  justifiedGallery: {
+    js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+    css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+};
+
+var saveToLocal = {
+  set: function setWithExpiry(key, value, ttl) {
+    const now = new Date()
+    const expiryDay = ttl * 86400000
+    const item = {
+      value: value,
+      expiry: now.getTime() + expiryDay,
+    }
+    localStorage.setItem(key, JSON.stringify(item))
+  },
+
+  get: function getWithExpiry(key) {
+    const itemStr = localStorage.getItem(key)
+
+    if (!itemStr) {
+      return undefined
+    }
+    const item = JSON.parse(itemStr)
+    const now = new Date()
+
+    if (now.getTime() > item.expiry) {
+      localStorage.removeItem(key)
+      return undefined
+    }
+    return item.value
+  }
+}</script><script id="config_change">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isSidebar: false,
+  postUpdate: '2021-04-21 11:20:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(function () {
+  window.activateDarkMode = function () {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+    }
+  }
+  window.activateLightMode = function () {
+    document.documentElement.setAttribute('data-theme', 'light')
+    if (document.querySelector('meta[name="theme-color"]') !== null) {
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+    }
+  }
+
+  const autoChangeMode = 'false'
+  const t = saveToLocal.get('theme')
+  if (autoChangeMode === '1') {
+    const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+    const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+    const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+    const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+    if (t === undefined) {
+      if (isLightMode) activateLightMode()
+      else if (isDarkMode) activateDarkMode()
+      else if (isNotSpecified || hasNoSupport) {
+        const now = new Date()
+        const hour = now.getHours()
+        const isNight = hour <= 6 || hour >= 18
+        isNight ? activateDarkMode() : activateLightMode()
+      }
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+        if (saveToLocal.get('theme') === undefined) {
+          e.matches ? activateDarkMode() : activateLightMode()
+        }
+      })
+    } else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else if (autoChangeMode === '2') {
+    const now = new Date()
+    const hour = now.getHours()
+    const isNight = hour <= 6 || hour >= 18
+    if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+    else if (t === 'light') activateLightMode()
+    else activateDarkMode()
+  } else {
+    if (t === 'dark') activateDarkMode()
+    else if (t === 'light') activateLightMode()
+  }
+})()</script><meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/myblog/atom.xml" title="WuTai's Blog" type="application/atom+xml">
+</head><body><div id="mobile-sidebar"><div id="menu_mask"></div><div id="mobile-sidebar-menus"><div class="mobile_author_icon"><img class="avatar-img" src="/myblog/img/richang-1.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="mobile_post_data"><div class="mobile_data_item is-center"><div class="mobile_data_link"><a href="/myblog/archives/"><div class="headline">Articles</div><div class="length_num">9</div></a></div></div><div class="mobile_data_item is-center">      <div class="mobile_data_link"><a href="/myblog/tags/"><div class="headline">Tags</div><div class="length_num">9</div></a></div></div><div class="mobile_data_item is-center">     <div class="mobile_data_link"><a href="/myblog/categories/"><div class="headline">Categories</div><div class="length_num">5</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1)"><nav id="nav"><span id="blog_name"><a id="site-name" href="/myblog/">WuTai's Blog</a></span><span id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/myblog/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> List</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page" href="/myblog/music/"><i class="fa-fw fas fa-music"></i><span> Music</span></a></li><li><a class="site-page" href="/myblog/movies/"><i class="fa-fw fas fa-video"></i><span> Movie</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/myblog/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/myblog/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><span class="close" id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></span></span></nav><div id="post-info"><div id="post-title"><div class="posttitle">EffectC++</div></div><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-21T03:19:33.602Z" title="Created 2021-04-21 11:19:33">2021-04-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-04-21T03:20:33.831Z" title="Updated 2021-04-21 11:20:33">2021-04-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/myblog/categories/C/">C++</a></span></div><div class="meta-secondline"> <span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout_post" id="content-inner"><article id="post"><div class="post-content" id="article-container"><hr>
+<p>04 确定对象使用前已经初始化<br>（1）<br>ABEntry::ABEntry(const std::string&amp; name, const std::string&amp; address, const std::list<PhoneNumber>&amp; phones)<br>                :theName(name),<br>                theAddress(address),<br>                thePhones(phones),<br>                numTimesConsulted(0)<br>                {}</p>
+<p>比起经由赋值操作完成的“伪初始化”，通过成员列初值完成的“真正初始化”更加可取。 注意在<br>成员初值列中使用成员时最好按照其声名次序来使用。</p>
+<p>（2）<br>C++对 定义于不同编译单元内的non-local static对象 的初始化顺序没有明确的定义</p>
+<p>但是因为C++保证，函数内的local static对象，在“函数被调用期间” “第一次遇到该对象的定义式” 的时候<br>初始化，所以用函数调用替换掉直接调用对象可以保证初始化的顺序。并且这样使用可以减少构造和析构的次数<br>e.g.</p>
+<p>class FileSystem<br>{<br>public:<br>    std::size_t numDisks() const;<br>};<br>extern FileSystem tfs;</p>
+<p>class Directory<br>{<br>public:<br>    Directory(params);<br>};</p>
+<p>Directory::Directory(params)<br>{<br>    std::size_t disks = tfs.numDisks();<br>}</p>
+<p>此时用户创建一个 Directory 对象，来放临时文件<br>Directory tempDir(params);</p>
+<p>在这种情况下，就按照前面所描述的情况来使用，大概情况如下：</p>
+<p>class FileSystem {};<br>FileSystem &amp;tfs()  // 类似一种仿真函数<br>{<br>    static FileSystem fs;<br>    return fs;<br>}<br>class Directory {};<br>Directory::Directory(params)<br>{<br>    std::size_t disks = tfs().numDisks(); // 将 tfs.numDisks() 改为 tfs().numDisks()<br>}<br>Directory&amp; tempDir() // 现在用 Directory&amp; tempDir() 函数来替换 tempDir 对象<br>{<br>    static Directory td;<br>    return td;<br>}</p>
+<p>为了避免“跨单元编译之初始化”问题，最好用local static对象 替换non-local static对象。</p>
+<hr>
+<p>05 了解编译器默默编写并调用了哪些函数</p>
+<p>default 构造函数<br>copy 构造函数<br>copy assignment 操作符<br>析构函数</p>
+<hr>
+<p>06 若不想使用编译器自动生成的函数，就应该明确拒绝</p>
+<p>方法一： 将其 copy 构造函数 和 copy assignment 构造函数声明为 private 而且不需要将其定义<br>（因为不会使用）<br>class NoCopyable<br>{<br>public:<br>    …<br>private:<br>    NoCopyable(const NoCopyable&amp;);<br>    NoCopyable&amp; operator=(const NoCopyable&amp;);<br>};</p>
+<p>方法二： 为了能在编译期间找到错误，可以构造一个专门阻止copying动作的 base class。<br>class Uncopyable<br>{<br>protected:<br>    Uncopyable();<br>    ~Uncopyable(); //允许derived对象构造和析构<br>private:<br>    Uncopyable(const Uncopyable&amp;);<br>    Uncopyable&amp; operator=(const Uncopyable&amp;);<br>};</p>
+<p>使用时自需要继承它即可<br>class HomeForSale: private Uncopyable<br>{<br>    //     不需要提供 copy 和 assigned copy 函数<br>};</p>
+<hr>
+<p>07 为多态基类声明 virtual 析构函数</p>
+<p>class TimeKeeper<br>{<br>public:<br>    TimeKeeper();<br>    ~TimeKeeper();<br>};</p>
+<p>class AtomicClock: public TimeKeeper {};<br>class WaterClock: public TimeKeeper {};<br>class WristWatch: public TimeKeeper {};</p>
+<p>TimeKeeper* getTimekeeper();</p>
+<p>TimeKeeper* ptk = getTimekeeper();<br>…<br>delete ptk;<br>// 这里getTimeKeeper() 返回的指针指向一个 derived class 对象, 但是该对象却经由一个<br>// bass class 指针来删除，当前bass class 只有一个 non-virtual 析构函数，导致其结果<br>// 未定义。 产生诡异的 “局部销毁对象”！</p>
+<p>解决办法： 将其bass class的析构函数声明为 virtual<br>class TimerKeeper<br>{<br>public:<br>    TimerKeeper();<br>    virtual ~TimerKeeper();<br>};<br>TimerKeeper* ptk = getTimekeeper();<br>…<br>delete ptk;</p>
+<p>Tips: 如果一个 class 不含 virtual 函数。说明它并不希望被作为一个 bass class 来使用。<br>若此时再将其析构函数声明为 virtual 是非常不合适的。 将一个函数声明为 virtual 的时候<br>会改变该class的内存布局，并且降低其可移植性，通用性。<br>通常只有当class内至少有一个虚函数的时候，才将其析构函数声明为 virtual</p>
+<p>给bass class 一个 virtual 析构函数，这个规则只适用于polymorphic base class 上，<br>这类classes的设计目的是为了通过bass class 接口来处理 derived class 对象。 其它的classes<br>就不应该声明 virtual 析构函数。</p>
+<p>polymorphic base classes 应该声明一个 virtual  析构函数。如果 class 带任何 virtual 函数，<br>它就应该拥有一个 virtual 析构函数。</p>
+<hr>
+<p>08 别让异常逃离析构函数</p>
+<p>当使用下面这个类来管理 DBConnection 对象;</p>
+<p>class DBConn<br>{<br>public:<br>    …<br>    ~DBConn()<br>    {<br>        db.close();     // 确保数据库总是会被关闭。<br>    }<br>private:<br>    DBConnection db;<br>}</p>
+<p>如果 <del>DBConn() 调用正常那么便不会有问题，但是只要没有调用 ~DBConn() 那么该析构函数便会<br>传播该异常，允许其离开这个析构函数。<br>有以下两种解决办法：<br>1：如果 close() 抛出异常就结束程序，那么就通过调用 abort() 来完成;<br>DBConn::</del>DBConn()<br>{<br>    try { db.close(); }<br>    catch (…)<br>    {<br>        // 制作运转记录，记录下 close() 的调用失败<br>        std::abort();<br>    }<br>}<br>阻止异常从 close() 传播出去，调用 abort() 抢先将“不明确行为”置于死地</p>
+<p>2：吞下因为调用 close() 而产生的异常<br>DBConn::~DBConn()<br>{<br>    try { db.close(); }<br>    catch (…)<br>    {<br>        // 制作运转记录，记录下 close() 的调用失败<br>    }<br>}<br>该方法主要是为了保证程序在遇到异常时还能继续运行下去而做的妥协，当然，这并不是一个好主意。<br>这两种情况都不能对“导致close()”抛出异常的情况做出反应</p>
+<p>最好的设计方法还是提供一个 close() 函数给客户一个自己处理发生异常的。 当用户实在是不想自己<br>处理的时候，我们再使用上面两个方法。</p>
+<p>class DBConn<br>{<br>public:<br>    …<br>    void close()<br>    {<br>        db.close();<br>        closed = true;<br>    }<br>    ~DBConn()<br>    {<br>        if (!ifclose())<br>        {<br>            try<br>            {<br>                db.close();<br>            }<br>            catch (…)<br>            {<br>                // 制作运转记录，记录下 close() 的调用失败<br>            }<br>        }<br>    }<br>private:<br>    DBConnection db;<br>    bool closed;<br>}</p>
+<p><strong>** 析构函数绝对不要吐出异常 **</strong></p>
+<hr>
+<p>09 绝不在构造和析构过程中调用 virtual 函数</p>
+<p>class Transaction<br>{<br>public:<br>    Transaction();<br>    virtual void logTransaction() const = 0;<br>    …<br>};<br>Transaction::Transaction<br>{<br>    …<br>    logTransaction();<br>}<br>class BuyTransaction: public Transaction<br>{<br>public:<br>    virtual void logTransaction() const;<br>    …<br>};<br>class SellTransaction: public Transaction<br>{<br>public:<br>    virtual void logTransaction() const;<br>};</p>
+<p>当运行 BuyTransaction b;</p>
+<p>时调用的 logTransaction() 的版本不是 BuyTransaction 的版本而是 Transaction 的版本；<br>原因时由于 base class 在构造的时候其 virtual 函数不会下降到 derived class 阶层。 其<br>对象的行为就会类似隶属于 base 类型。 也就是说，在析构和构造的时候，virtual 函数不是<br>virtual;</p>
+<p>base class 的构造函数会先于 derived class 构造函数。 在 base class 构造完成的时候<br>derived class 还没有构造，在C++中绝对不能要求使用对象内部尚未初始化的部分。所以此时<br>bass class 的 virtual 函数绝对不会下降到 derived class 阶层。</p>
+<p>及对象在 derived class 的构造函数开始之前不会成为一个 derived class 对象</p>
+<p>解决方法</p>
+<p>class Transaction<br>{<br>public:<br>    explicit Transaction(const std::string&amp; logInfo);<br>    void logTransaction(const std::string&amp; logInfo) const; // 现在是一个 non-vitrual 函数<br>};</p>
+<p>Transaction::Transaction(const std::string&amp; logInfo)<br>{<br>    …<br>    logTransaction(logInfo); // 让 derived class 构造函数传递必要信息给 Transaction 构造函数<br>                             // 然后便可以安全的调用 non-virtual logTransaction<br>}</p>
+<p>class BuyTransaction<br>{<br>public:<br>    BuyTransaction(parameters)<br>    : Transaction(createLogString(parameters))  // 将 log 信息传递给 base class 构造函数<br>    { … }<br>    …<br>private:<br>    static std::string createLogString(parameters);<br>}</p>
+<p>在构造和析构期间不要调用 virtual 函数</p>
+<hr>
+<p>10 令 operator= 返回一个 reference to *this</p>
+<p>为了能实现连锁赋值，赋值操作符必须返回一个 reference 指向操作符左侧的实参。<br>令赋值操作符返回一个 reference to *this</p>
+<p>class Widget<br>{<br>public:<br>    …<br>    Widget&amp; operator+=(const Widget&amp; rhs)<br>    {<br>        …<br>        return *this;<br>    }<br>    Widget&amp; operator=(int rhs)<br>    {<br>        …<br>        return *this;<br>    }<br>} </p>
+<hr>
+<p>11 在 operator= 中处理 “自我赋值”</p>
+<p>自我赋值的情况如下：<br>class Widget { … };<br>Widget w;<br>…<br>w = w;</p>
+<p>这种情况看上去非常奇怪，但是编译器并不会阻止，而且存在很多的 “潜在自我赋值” 形式，如下：<br>1.a[i] = a[j]; // i == j<br>2.*px = *py;   // px py 可能指向同一个东西<br>3.class Base { … };<br>  class Derived: public Base { … };<br>  void doSomething (const Base&amp; rb, Derived *pd); // rb 和 pd 有可能是指向同一个对象</p>
+<p>一般情况下使用C++自己提供的资源管理对象的时候是“自我赋值安全”的，但是当决定自己写一个<br>资源管理对象的时候，很有可能犯　“在停止使用资源前意外释放”　的错误，该情况如下：<br>class Bitmap { … };<br>class Widget<br>{<br>    …<br>private:<br>    Bitmap* pb;<br>}</p>
+<p>Widget&amp; Widget::operator=(const Widget&amp; rhs)<br>{<br>    delete pb;                    // 停止当前的bitmap<br>    pb = new Bitmap(*rhs.pb);    // 使用 rhs’s bitmap 副本<br>    return *this;<br>}</p>
+<p>在这种情况下， rhs 和 bp 可能是同一个东西，这时，如果 delete pb 则可能同时 delete 了 rhs<br>导致最后 return *this; 指向了一块已经被删除了的区域，这是非常危险的操作！！</p>
+<p>传统的解决方法如下是，在 operator= 中添加 “认同测试”</p>
+<p>Widget&amp; Widget::operator=(const Widget&amp; rhs)<br>{<br>    if (this == &amp;rhs) return *this; // 检查这两指针是否指向同一个对象<br>    delete pb;<br>    pb = new Bitmap(*rhs.pb);<br>    return *this;<br>}</p>
+<p>虽然这个版本处理了 “赋值安全性” 但是在 “异常安全性” 上却完全没有办法。 如果 new Bitmap<br>发生了异常，那么Widget最终还是会指向一块被删除了的 Bitmap;</p>
+<p>幸运的是，如果处理完了“异常安全性”那么Widget会自动获得 “自我赋值安全性”</p>
+<p>Widget&amp; Widget::operator=(const Widget&amp; rhs)<br>{<br>    Bitmap* pOrig = pb;                // 先记住原先的 pb<br>    pb = new Bitmap(*rhs.pb);        // 令 pb 指向一个 *pb 的副本<br>    delete pOrig;                    // 删除原来的 pb<br>    return *this;<br>} </p>
+<p>这种情况下虽然获得了两个安全性，但是却有了性能上的损失。<br>使用 copy and swap 技术<br>class Widget<br>{<br>    …<br>    void swap(Widget&amp; rhs);<br>    …<br>};<br>Widget&amp; Widget::operator=(const Widget&amp; rhs)<br>{<br>    Widget temp(rhs);   // 为rhs数据制作一份附件<br>    swap(temp);            // 将 *this 数据和上述附件的数据交换<br>    return *this;<br>}</p>
+<p>确保当对象自我复制的时候 operator= 有良好行为。</p>
+<hr>
+<p>12 复制对象时勿忘其每一部分的组成 </p>
+<p>class Date { … };<br>class Customer<br>{<br>public:<br>    …<br>private:<br>    std::string name;<br>    Date lastTransaction;<br>};</p>
+<p>在这种情况的类的结构下，一旦发生继承将会产生非常危险的结果:</p>
+<p>class PriorityCustomer: public Customer<br>{<br>public:<br>    …<br>    PriorityCustomer(const PriorityCustomer&amp; rhs);<br>    PriorityCustomer&amp; operator=(const PriorityCustomer&amp; rhs);<br>    …<br>private:<br>    int priority;<br>};</p>
+<dl><dt>PriorityCustomer::PriorityCustomer(const PriorityCustomer&amp; rhs)</dt><dd>priority(rhs.priority)<br>{<br>    logCall(“…”);<br>}<br>PriorityCustomer&amp; PriorityCustomer::PriorityCustomer operator=<br>(const PriorityCustomer&amp; rhs)<br>{<br>    logCall(“…”);<br>    priority = rhs.priority;<br>    return *this;<br>}</dd></dl><p>注意，这里的copy构造函数并没有指定实参传递给 base class 的构造函数。<br>因此 PriorityCustomer 对象的 Customer 成分会被 Customer 的 default 构造函数<br>进行缺省的初始化。</p>
+<p>所以在任何时候，只要承担了为 derived class 撰写 copying 函数的重大责任，我们必须<br>小心的复制其 base class 成分！</p>
+<dl><dt>PriorityCustomer::PriorityCustomer(const PriorityCustomer&amp; rhs)</dt><dd>Customer(rhs),             // 调用 base class 的 copy 构造函数<br>  priority(rhs.priority)<br>{<br>    logCall(“…”);<br>}</dd></dl><p>PriorityCustomer&amp; PriorityCustomer::operator=(const PriorityCustomer&amp; rhs)<br>{<br>    logCall(“…”);<br>    Customer::operator=(rhs);        // 对 base class 进行赋值<br>    priority = rhs.priority;<br>    return *this;<br>}</p>
+<p>tips: 不要尝试用某个 copying 函数实现另一个 copying 函数。如果确实想要精简代码，那么将<br>其共同的机能放入第三个函数中，并由两个 copying 函数共同调用。</p>
+</div><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">WuTai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2021/04/21/C/Effective%20C++%2055%20(04-12)/">http://example.com/2021/04/21/C/Effective%20C++%2055%20(04-12)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/myblog/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></div><div class="post_share"><div class="social-share" data-image="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/myblog/2021/04/19/C/%E5%88%9D%E5%A7%8B%E5%8C%96%20Direct3D/"><img class="next-cover" src="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1" onerror="onerror=null;src='/myblog/img/404.jpg'"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">初始化 Direct3D 12</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/myblog/2020/10/13/C/C++ 中 const 的使用要点/" title="C++ 中 const 的使用要点"><img class="cover" src="/myblog/img/hui-3.png"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-13</div><div class="title">C++ 中 const 的使用要点</div></div></a></div><div><a href="/myblog/2021/04/19/C/初始化 Direct3D/" title="初始化 Direct3D 12"><img class="cover" src="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-19</div><div class="title">初始化 Direct3D 12</div></div></a></div><div><a href="/myblog/2020/09/26/C/利用汇编深入学习C++/" title="利用汇编深入学习C++"><img class="cover" src="https://oargdg.sn.files.1drv.com/y4m-eERgmYUVRvNSMLo5D0Z_aPrYUwmtJB2odmIbJR0yX4rI9le1RKYM0qIWoLjG5mCZ9MI58ej-fMFYd8tQr_t8yHa9loMkGlc-vSyQWa9w0s8X5BcH7_UOnMFeBZ7EiBtdTdrfOjIX2BiTYT40dUnojxMIslbCMndId0VququuH8224udyM01kUqFFpdm-6YfMoGcF8sfVrZEhfbvQNG8UxqqmHWiMD89iQ5Nr9Fum40/hui-4.png?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-26</div><div class="title">利用汇编深入学习C++</div></div></a></div><div><a href="/myblog/2020/10/07/C/并发：互斥与同步的各种实现/" title="并发：互斥与同步的各种实现"><img class="cover" src="https://mwrgdg.sn.files.1drv.com/y4pXRChVqDEQ3lnR4YfVe1dTrlNBN3qSz6c06JZAcsT4UAYpG4tX-pAc-AcqgrpsOfKcO-FAhwwAgO12v-7fc6-gQC2jeeYbyHfhVGA-mfGr2tV1L9XB0kuhyVh5Cvau-uEPNgwoZ31SvWkqAwZUqXQugJ8CUSv7IvzzrrNVkcyfii27msrLLIRuR8fQzjOI53_RO_D3snscCsGSqosM6xgXQ/hui-2.jpg?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-07</div><div class="title">并发：互斥与同步的各种实现</div></div></a></div><div><a href="/myblog/2020/11/04/C/操作系统主要考察点/" title="操作系统复习"><img class="cover" src="https://math6g.sn.files.1drv.com/y4mh4uRWATYJ6m1MJOUJGGYL-d2DucIMT6MTPfNVGNA44hmj56GY7WhdqkHE9RSLcqHrsTuPwRqol1qRUrYxHezUIwb1_Ws25Gk-M0o_EJyrwS9JAyD_bCnpjwnEi4Yu1FfGZCT49fB7aP3qECul5AMoend4tCmmbCGuu5oHJs5-FItHyXqfLj5hyHdDafU0ZZuBjvTp9NW9t2Ti36_gFBFa4o-Ur2OSpZ4SIH6IVo_uMI/hui-3.png?psid=1"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-04</div><div class="title">操作系统复习</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div class="comment-switch"><span class="first-comment">V</span><label><input id="switch-comments-btn" type="checkbox"/><span class="slider"></span></label><span class="second-comment">a</span></div></div><div class="comment-wrap"><div></div><div></div><div></div><div></div><div></div><div></div></div></div></article></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By WuTai</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><section id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></section><div><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="/myblog/js/utils.js"></script><script src="/myblog/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  var script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></div></body></html>
