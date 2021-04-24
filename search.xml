@@ -368,7 +368,7 @@
 <p>08 别让异常逃离析构函数</p>
 <p>当使用下面这个类来管理 DBConnection 对象;</p>
 <p>class DBConn<br>{<br>public:<br>    …<br>    ~DBConn()<br>    {<br>        db.close();     // 确保数据库总是会被关闭。<br>    }<br>private:<br>    DBConnection db;<br>}</p>
-<p>如果 <del>DBConn() 调用正常那么便不会有问题，但是只要没有调用 ~DBConn() 那么该析构函数便会<br>传播该异常，允许其离开这个析构函数。<br>有以下两种解决办法：<br>1：如果 close() 抛出异常就结束程序，那么就通过调用 abort() 来完成;<br>DBConn::</del>DBConn()<br>{<br>    try { db.close(); }<br>    catch (…)<br>    {<br>        // 制作运转记录，记录下 close() 的调用失败<br>        std::abort();<br>    }<br>}<br>阻止异常从 close() 传播出去，调用 abort() 抢先将“不明确行为”置于死地</p>
+<p>如果 <code>~DBConn()</code> 调用正常那么便不会有问题，但是只要没有调用 <code>~DBConn()</code> 那么该析构函数便会<br>传播该异常，允许其离开这个析构函数。<br>有以下两种解决办法：<br>1：如果 close() 抛出异常就结束程序，那么就通过调用 abort() 来完成;<br>DBConn::~DBConn()<br>{<br>    try { db.close(); }<br>    catch (…)<br>    {<br>        // 制作运转记录，记录下 close() 的调用失败<br>        std::abort();<br>    }<br>}<br>阻止异常从 close() 传播出去，调用 abort() 抢先将“不明确行为”置于死地</p>
 <p>2：吞下因为调用 close() 而产生的异常<br>DBConn::~DBConn()<br>{<br>    try { db.close(); }<br>    catch (…)<br>    {<br>        // 制作运转记录，记录下 close() 的调用失败<br>    }<br>}<br>该方法主要是为了保证程序在遇到异常时还能继续运行下去而做的妥协，当然，这并不是一个好主意。<br>这两种情况都不能对“导致close()”抛出异常的情况做出反应</p>
 <p>最好的设计方法还是提供一个 close() 函数给客户一个自己处理发生异常的。 当用户实在是不想自己<br>处理的时候，我们再使用上面两个方法。</p>
 <p>class DBConn<br>{<br>public:<br>    …<br>    void close()<br>    {<br>        db.close();<br>        closed = true;<br>    }<br>    ~DBConn()<br>    {<br>        if (!ifclose())<br>        {<br>            try<br>            {<br>                db.close();<br>            }<br>            catch (…)<br>            {<br>                // 制作运转记录，记录下 close() 的调用失败<br>            }<br>        }<br>    }<br>private:<br>    DBConnection db;<br>    bool closed;<br>}</p>
