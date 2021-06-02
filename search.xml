@@ -1745,8 +1745,11 @@
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">mCmdList-&gt;DrawIndexedInstaced(numSphereIndices, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">mCmdList-&gt;DrawIndexedInstance(numBoxIndices, <span class="number">1</span>, firstBoxIndex, </span><br><span class="line">                             firstBoxVertexPos, <span class="number">0</span>);</span><br><span class="line">mCmdList-&gt;DrawIndexedInstance(numCylIndices, <span class="number">1</span>, firstCylIndex,</span><br><span class="line">                             firstCylIndex, firstCylVertexPos, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
 
 <h3 id="4、顶点着色器示例"><a href="#4、顶点着色器示例" class="headerlink" title="4、顶点着色器示例"></a>4、顶点着色器示例</h3><p>下面是一个简单的顶点着色器</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cbuffer cbPerObject : <span class="keyword">register</span>(b0)</span><br><span class="line">&#123;</span><br><span class="line">    float4x4 gWorldViewProj;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VS</span><span class="params">(float3 iPosL : POSITION,</span></span></span><br><span class="line"><span class="function"><span class="params">       float4 iColor : COLOR,</span></span></span><br><span class="line"><span class="function"><span class="params">       out float4 oPosH : SV_POSITION,</span></span></span><br><span class="line"><span class="function"><span class="params">       out float4 oColor : COLOR)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 顶点变换到齐次剪裁空间</span></span><br><span class="line">    oPosH = mul(float4(iPosL, <span class="number">1.0f</span>), gWorldProj);</span><br><span class="line">    <span class="comment">// 直接将顶点的颜色信息传递到像素着色器</span></span><br><span class="line">    oColor = iColor;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">` :POSITION ` 和 ` :COLOR ` 语义用于将结构体中的数据映射到顶点着色器的相应输入参数。（输入签名 Input Signature）</span><br><span class="line"></span><br><span class="line">前缀为 **out** ` :SV_POSITION `, ` :COLOR ` 的语义用于将输出的参数映射到下一处理阶段的输入参数。</span><br><span class="line"></span><br><span class="line">为了避免过长的函数输入参数我们可以将其返回类型和输入签名换为结构体</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">cbuffer cbPerObject : <span class="keyword">register</span>(b0)</span><br><span class="line">&#123;</span><br><span class="line">    float4x4 gWorldViewProj;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">VS</span><span class="params">(float3 iPosL : POSITION,</span></span></span><br><span class="line"><span class="function"><span class="params">       float4 iColor : COLOR,</span></span></span><br><span class="line"><span class="function"><span class="params">       out float4 oPosH : SV_POSITION,</span></span></span><br><span class="line"><span class="function"><span class="params">       out float4 oColor : COLOR)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 顶点变换到齐次剪裁空间</span></span><br><span class="line">    oPosH = mul(float4(iPosL, <span class="number">1.0f</span>), gWorldProj);</span><br><span class="line">    <span class="comment">// 直接将顶点的颜色信息传递到像素着色器</span></span><br><span class="line">    oColor = iColor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p><code>:POSITION</code> 和 <code>:COLOR</code> 语义用于将结构体中的数据映射到顶点着色器的相应输入参数。（输入签名 Input Signature）</p>
+<p>前缀为 <strong>out</strong> <code>:SV_POSITION</code>, <code>:COLOR</code> 的语义用于将输出的参数映射到下一处理阶段的输入参数。</p>
+<p>为了避免过长的函数输入参数我们可以将其返回类型和输入签名换为结构体</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">VertexIn</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">VertexOut</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p><strong>链接输入布局与输入签名</strong> </p>
@@ -1926,5 +1929,314 @@
         <tag>C/C++</tag>
         <tag>学习笔记</tag>
       </tags>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/myblog/2021/05/27/C/Untitled-1/</url>
+    <content><![CDATA[<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      html,body {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        background-color: #f8f8f8;
+      }
+      .main {
+        width: 690px;
+    height: 345px;
+    background: url(img/setu.png) no-repeat;
+    background-size: cover;
+    overflow: scroll;
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin: auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+
+      }
+      .file-box {
+        display: flex;
+        flex-direction: column;
+        width: 450px;
+        height: auto;
+        overflow: hidden;
+      }
+      .box-item {
+        width: 100%;
+        height: 32px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        position: relative;
+      }
+      .box-item .type {
+      }
+      .box-item .name {
+      }
+      .box-item .delete {
+        margin: auto;
+        margin-right: 0;
+      }
+      .upload-box {
+        display: none;
+      }
+      .return {
+        display: none;
+      }
+    </style>
+  </head>
+  <template id="box-item">
+    <div>
+      <div class="box-item">
+        <span class="type">[]:</span>
+        <a href="#" class="name"></a>
+        <button class="delete">delete</button>
+      </div>
+    </div>
+  </template>
+  <body>
+    <div class="main">
+      <form class="login">
+        <label for="">账号</label>
+        <input type="text" placeholder="username" />
+        <label for="">密码</label>
+        <input type="password" name="" id="" />
+        <button class="login-btn">登陆</button>
+        <button class="register-btn">注册</button>
+      </form>
+
+      <form class="upload-box">
+        <input type="file" name="file" id="file" />
+        <button class="upload">上传</button>
+      </form>
+      <hr />
+      <div class="return">返回</div>
+      <div class="file-box">
+      </div>
+    </div>
+  </body>
+  <script>
+    let pathArr = [];
+    let userId = "";
+
+    document.getElementsByClassName("return")[0].onclick = function () {
+      before();
+      entrance().then((res) => {
+        document.getElementsByClassName("file-box")[0].innerHTML = "";
+        const { success, data } = res;
+        if (success) {
+          data.forEach((v) => {
+            addItem(v.directory ? "dir" : "file", v.name);
+          });
+        }
+      });
+    };
+
+    function next(path) {
+      pathArr.push(path);
+      document.getElementsByClassName("return")[0].style.display = "block";
+    }
+
+    function before() {
+      pathArr.pop();
+      if (pathArr.length === 0) {
+        document.getElementsByClassName("return")[0].style.display = "none";
+      }
+    }
+
+    function getPath() {
+      let path = "";
+      pathArr.forEach((p) => {
+        path += "/" + p;
+      });
+      return path;
+    }
+
+    function getDotPath() {
+      let path = "";
+      pathArr.forEach((p) => {
+        path += p + ".";
+      });
+      path = path.replace(/\.$/, "");
+      return path;
+    }
+
+    function deleteFile(name) {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          `http://localhost:8080/demo-1/files/delete?path=${userId}${getPath()}/${name}`,
+          true
+        );
+        xhr.onload = function (e) {
+          resolve(e);
+        };
+        xhr.send();
+      });
+    }
+
+    function entrance() {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "GET",
+          `http://localhost:8080/demo-1/files?path=${userId}${getPath()}/${name}`,
+          true
+        );
+        xhr.onload = function () {
+          resolve(JSON.parse(xhr.response));
+        };
+        xhr.send();
+      });
+    }
+
+    function login(username, password) {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          `http://localhost:8080/demo-1/login?username=${username}&password=${password}`,
+          true
+        );
+        xhr.onload = function () {
+          resolve(JSON.parse(xhr.response));
+        };
+        xhr.send();
+      });
+    }
+
+    function register(username, password) {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open(
+          "POST",
+          `http://localhost:8080/demo-1/register?username=${username}&password=${password}`,
+          true
+        );
+        xhr.onload = function () {
+          resolve(JSON.parse(xhr.response));
+        };
+        xhr.send();
+      });
+    }
+
+    function addItem(type, name) {
+      const template = document.getElementById("box-item").content.children[0];
+      const items = document.getElementsByClassName("file-box")[0];
+      let html = template.innerHTML;
+      html = html.replace(/\{\{ +type +\}\}/g, type);
+      html = html.replace(/\{\{ +name +\}\}/g, name);
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      // 进入
+      div.children[0].children[1].setAttribute(
+        "href",
+        `http://localhost:8080/demo-1/files/download?path=${userId}${getPath()}/${name}`
+      );
+      div.children[0].children[1].onclick = function (e) {
+        if (type === "dir") {
+          e.preventDefault();
+          items.innerHTML = "";
+          next(name);
+          entrance().then((res) => {
+            const { success, data } = res;
+            if (success) {
+              data.forEach((v) => {
+                addItem(v.directory ? "dir" : "file", v.name);
+              });
+            }
+          });
+        } else if (type === "file") {
+        }
+      };
+      // 删除
+
+      const d = div.children[0];
+      div.children[0].children[2].onclick = function () {
+        const allow = confirm("确定要删除？");
+        if (allow) {
+          deleteFile(name).then((res) => {
+            items.removeChild(d);
+          });
+        }
+      };
+      items.appendChild(d);
+    }
+  </script>
+  <script>
+    // init
+    const loginform = document.getElementsByClassName("login")[0];
+    const loginBtn = document.getElementsByClassName("login-btn")[0];
+    const registerBtn = document.getElementsByClassName("register-btn")[0];
+
+    loginBtn.onclick = function (e) {
+      e.preventDefault();
+      login(loginform.elements[0].value, loginform.elements[1].value).then(
+        (res) => {
+          if (res.success) {
+            userId = res.data;
+            document.querySelector(".upload-box").style.display = "block";
+            entrance().then((res) => {
+              const { success, data } = res;
+              if (success) {
+                data.forEach((v) => {
+                  addItem(v.directory ? "dir" : "file", v.name);
+                });
+              }
+            });
+          }
+        }
+      );
+    };
+    registerBtn.onclick = function (e) {
+      e.preventDefault();
+      register(loginform.elements[0].value, loginform.elements[1].value).then(
+        (res) => {
+          if (res.success) {
+            alert("注册成功");
+          }
+        }
+      );
+    };
+  </script>
+  <script>
+    const input = document.querySelector("input");
+    document.querySelector(".upload").onclick = function (e) {
+      e.preventDefault();
+      const formData = new FormData(document.querySelector(".upload-box"));
+      window.f = formData;
+      const xhr = new XMLHttpRequest();
+      xhr.open(
+        "POST",
+        `http://127.0.0.1:8089/upload?id=${userId}&path=${getDotPath()}`,
+        true
+      );
+      xhr.onload = function (e) {
+        entrance().then((res) => {
+          document.getElementsByClassName("file-box")[0].innerHTML = "";
+          const { success, data } = res;
+          if (success) {
+            data.forEach((v) => {
+              addItem(v.directory ? "dir" : "file", v.name);
+            });
+          }
+        });
+      };
+      xhr.send(formData);
+    };
+  </script>
+</html>
+]]></content>
   </entry>
 </search>
