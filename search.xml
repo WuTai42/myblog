@@ -1932,7 +1932,7 @@
   </entry>
   <entry>
     <title>STL 源码学习 序列式容器 Sequence Containers (1)</title>
-    <url>/myblog/2021/06/08/STL/</url>
+    <url>/myblog/2021/06/08/C/STL/</url>
     <content><![CDATA[<h2 id="序列式容器-Sequence-Containers-1"><a href="#序列式容器-Sequence-Containers-1" class="headerlink" title="序列式容器 Sequence Containers (1)"></a>序列式容器 Sequence Containers (1)</h2><hr>
 <h3 id="一、vector"><a href="#一、vector" class="headerlink" title="一、vector"></a>一、vector</h3><p>vector 维护者一个连续的动态空间。使用迭代器 start 表示空间的头，finish 表示空间的尾，end_of_storage 表示目前可用的空间的尾。</p>
 <p>为了降低 vector 空间配置时的速度成本，vector 的实际配置的大小会比客户端要求的更大一些，以备可能的扩充。</p>
